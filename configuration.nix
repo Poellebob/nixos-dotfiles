@@ -3,8 +3,8 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
-    ./device.nix
+    /etc/nixos/hardware-configuration.nix
+    /etc/nixos/configuration.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
