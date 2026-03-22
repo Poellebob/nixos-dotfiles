@@ -14,7 +14,7 @@
         home-manager.follows = "home-manager";
       };
     };
-    minima.url = "./minima";
+    minima.url = "github:Poellebob/minima-shell/devil";
   };
   outputs = { 
     self, 
