@@ -1,5 +1,8 @@
 { config, pkgs, lib, minima, inputs, ... }:
 
+let 
+  zen-browser = inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default;
+in
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -81,6 +84,7 @@
     shell = pkgs.zsh;
 
     packages = with pkgs; [
+      zen-browser
       thunderbird
       vscodium
       opencode
@@ -102,10 +106,6 @@
         minima.homeModules.default 
         inputs.zen-browser.homeModules.beta
       ];
-      programs.zen-browser = {
-        enable = true;
-        nativeMessagingHosts = [ pkgs.firefoxpwa ];
-      };
       minima = {
         enable = true;
         vim = {
