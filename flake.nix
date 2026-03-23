@@ -1,5 +1,5 @@
 {
-  description = "nixos configuration";
+  description = "Viggo Kirkegaard Helstrups nixos configuration";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     dolphin-overlay.url = "github:rumboon/dolphin-overlay";
@@ -16,24 +16,14 @@
     };
     minima.url = "github:Poellebob/minima-shell/devil";
   };
-  outputs = { 
-    self, 
-    nixpkgs, 
-    home-manager, 
-    dolphin-overlay, 
-    minima, 
-    ... 
-  }@inputs: {
-    nixosConfigurations.framework13 = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit minima inputs; };
-      modules = [
-        ./configuration.nix
+  outputs = { home-manager, dolphin-overlay, minima, ... }@inputs: {
+    nixosModules.default = { ... }: {
+      imports = [
         home-manager.nixosModules.home-manager
-        {
-          nixpkgs.overlays = [ dolphin-overlay.overlays.default ];
-        }
+        ./configuration.nix
       ];
+      nixpkgs.overlays = [ dolphin-overlay.overlays.default ];
+      _module.args = { inherit minima inputs; };
     };
   };
 }

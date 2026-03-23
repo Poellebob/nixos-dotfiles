@@ -1,12 +1,6 @@
 { config, pkgs, lib, minima, inputs, ... }:
 
-
 {
-  imports = [
-    /etc/nixos/hardware-configuration.nix
-    /etc/nixos/configuration.nix
-  ];
-
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = [
