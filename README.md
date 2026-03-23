@@ -1,4 +1,12 @@
-## Exaple usage
+# Welcome to my personel nixos config.
+
+This flake has every thing configrured that i use on multiple mashines.
+
+Mashine spesefic conigs are in orthan braches importing the *master* brach.
+
+## Usage:
+
+Fork this repo and clone it into a dir in your os config folder, import like this.
 
 ```nix
 {
