@@ -14,16 +14,33 @@
         home-manager.follows = "home-manager";
       };
     };
-    minima.url = "github:Poellebob/minima-shell/devil";
+    minima = {
+      url = "git+file:./minima";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { home-manager, dolphin-overlay, minima, ... }@inputs: {
-    nixosModules.default = { ... }: {
-      imports = [
+  outputs = { self, nixpkgs, home-manager, dolphin-overlay, minima, ... }@inputs:
+let
+  goonboxConfig = import "${self}/hosts/goonbox-3500/configuration.nix";
+  frameworkConfig = import "${self}/hosts/framework13/configuration.nix";
+in
+{
+    nixosConfigurations.goonbox-3500 = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
         home-manager.nixosModules.home-manager
-        ./configuration.nix
+        goonboxConfig
       ];
-      nixpkgs.overlays = [ dolphin-overlay.overlays.default ];
-      _module.args = { inherit minima inputs; };
+      specialArgs = { inherit minima inputs; };
+    };
+
+    nixosConfigurations.framework13 = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        home-manager.nixosModules.home-manager
+        frameworkConfig
+      ];
+      specialArgs = { inherit minima inputs; };
     };
   };
 }

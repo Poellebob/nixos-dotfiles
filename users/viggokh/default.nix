@@ -4,6 +4,10 @@ let
   zen-browser = inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default;
 in
 {
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
+
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = [
@@ -11,8 +15,6 @@ in
     "flakes"
   ];
 
-
-  # XDG Portal
   xdg.portal = {
     enable = true;
     wlr.enable = true;
@@ -22,13 +24,9 @@ in
     ];
   };
 
-
-  # Security
   security.polkit.enable = true;
   security.rtkit.enable = true;
 
-
-  # Audio (PipeWire)
   services.pulseaudio.enable = false;
 
   services.pipewire = {
@@ -38,8 +36,6 @@ in
     pulse.enable = true;
   };
 
-
-  # Virtualisation
   programs.virt-manager.enable = true;
 
   virtualisation = {
@@ -49,8 +45,6 @@ in
 
   users.groups.libvirtd.members = [ "viggokh" ];
 
-
-  # User env
   services.xserver.xkb = {
     layout = "dk";
     variant = "winkeys";
@@ -164,8 +158,6 @@ in
     };
   };
 
-
-  # Services
   services = {
     printing.enable = true;
     flatpak.enable = true;
@@ -183,20 +175,14 @@ in
     nix-direnv.enable = true;
   };
 
-
-  # Environment Variables
   environment.variables.TEXINPUTS =
     ".:${pkgs.sagetex}/tex/latex/sagetex//:";
 
-
-  # nix-ld
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [];
   };
 
-
-  # Fonts
   fonts = {
     enableDefaultPackages = true;
     fontconfig.enable = true;
@@ -206,8 +192,6 @@ in
     ];
   };
 
-
-  # System Packages
   programs.steam.enable = true;
   programs.kdeconnect.enable = true;
 
@@ -216,6 +200,7 @@ in
     hunspellDicts.da_DK
     aspell
     aspellDicts.da
+    appimage-run
     vim
     biber
     zathura
@@ -249,6 +234,7 @@ in
     kdePackages.qtdeclarative
     quickshell
     wireplumber
+    vulkan-tools
     libgtop
     bluez
     bluez-tools

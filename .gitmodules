@@ -1,0 +1,4 @@
+[submodule "minima"]
+  path = minima
+  url = https://github.com/Poellebob/minima-shell.git
+  branch = devil
