@@ -226,6 +226,7 @@ in
     kdePackages.dolphin
     kdePackages.ark
     kdePackages.discover
+    kdePackages.gwenview
     kdePackages.breeze
     kdePackages.breeze-gtk
     kdePackages.kio
@@ -258,6 +259,7 @@ in
     grim
     slurp
     swappy
+    mpv
     jq
     bc
     fzf
