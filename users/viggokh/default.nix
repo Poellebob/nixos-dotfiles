@@ -8,63 +8,8 @@ in
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  nixpkgs.config.allowUnfree = true;
-
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.kdePackages.xdg-desktop-portal-kde
-    ];
-  };
-
-  security.polkit.enable = true;
-  security.rtkit.enable = true;
-
-  services.pulseaudio.enable = false;
-
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  programs.virt-manager.enable = true;
-
-  virtualisation = {
-    libvirtd.enable = true;
-    spiceUSBRedirection.enable = true;
-  };
-
   users.groups.libvirtd.members = [ "viggokh" ];
-
-  services.xserver.xkb = {
-    layout = "dk";
-    variant = "winkeys";
-  };
-
-  console.keyMap = "dk-latin1";
-
-  services.xserver.enable = true;
-  services.displayManager.ly.enable = true;
-
-  programs = {
-    zsh.enable = true;
-    sway = {
-      enable = true;
-      wrapperFeatures.gtk = true;
-      extraPackages = with pkgs; [];
-    };
-  };
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  
+ 
   users.users.viggokh = {
     isNormalUser = true;
     description = "Viggo Kirkegaard Helstrup";
