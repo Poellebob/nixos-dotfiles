@@ -17,6 +17,8 @@
   };
   hardware.graphics.enable32Bit = true;
 
+  console.keyMap = "dk-latin1";
+
   programs.sway.package = pkgs.sway.overrideAttrs (old: {
     buildCommand = ''
       ${old.buildCommand}
@@ -24,6 +26,13 @@
         --add-flags "--unsupported-gpu"
     '';
   });
+
+  programs.virt-manager.enable = true;
+
+  virtualisation = {
+    libvirtd.enable = true;
+    spiceUSBRedirection.enable = true;
+  };
 
   programs.steam = { 
     extraCompatPackages = with pkgs; [

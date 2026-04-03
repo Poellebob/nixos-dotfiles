@@ -20,16 +20,12 @@
     };
   };
   outputs = { self, nixpkgs, home-manager, dolphin-overlay, minima, ... }@inputs:
-let
-  goonboxConfig = import "${self}/hosts/goonbox-3500/configuration.nix";
-  frameworkConfig = import "${self}/hosts/framework13/configuration.nix";
-in
-{
+  {
     nixosConfigurations.goonbox-3500 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         home-manager.nixosModules.home-manager
-        goonboxConfig
+        ./hosts/goonbox-3500/configuration.nix
       ];
       specialArgs = { inherit minima inputs; };
     };
@@ -38,7 +34,7 @@ in
       system = "x86_64-linux";
       modules = [
         home-manager.nixosModules.home-manager
-        frameworkConfig
+        ./hosts/framework13/configuration.nix
       ];
       specialArgs = { inherit minima inputs; };
     };

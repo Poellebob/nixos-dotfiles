@@ -48,11 +48,25 @@
     };
   };
 
+  programs.virt-manager.enable = true;
+
+  virtualisation = {
+    libvirtd.enable = true;
+    spiceUSBRedirection.enable = true;
+  };
+
   networking.hostName = "framework13";
 
   services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.graphics.enable = true;
   hardware.bluetooth.enable = true;
+
+  services.udev.packages = with pkgs; [
+    platformio-core.udev
+    openocd
+  ];
+
+  console.keyMap = "dk-latin1";
 
   services.displayManager.ly.enable = true;
 }
