@@ -30,13 +30,13 @@ in
       obsidian
       ungoogled-chromium
       protonvpn-gui
+      tor-browser
       qbittorrent
       prismlauncher
     ];
   };
 
   home-manager = {
-    useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = { inherit minima; };
     users.viggokh = {

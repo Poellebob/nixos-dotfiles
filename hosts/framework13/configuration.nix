@@ -68,5 +68,7 @@
 
   console.keyMap = "dk-latin1";
 
+  services.xserver.layout = "dk";
+
   services.displayManager.ly.enable = true;
 }

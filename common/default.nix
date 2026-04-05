@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   nixpkgs.overlays = [
@@ -7,6 +7,7 @@
         doCheck = false;
       });
     })
+    inputs.dolphin-overlay.overlays.default
   ];
 
   boot = {
@@ -54,8 +55,6 @@
       extraPackages = with pkgs; [];
     };
   };
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
- 
 
   security.polkit.enable = true;
   security.rtkit.enable = true;

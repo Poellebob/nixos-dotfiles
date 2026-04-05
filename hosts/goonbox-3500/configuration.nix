@@ -19,6 +19,8 @@
 
   console.keyMap = "dk-latin1";
 
+  services.xserver.layout = "dk";
+
   programs.sway.package = pkgs.sway.overrideAttrs (old: {
     buildCommand = ''
       ${old.buildCommand}
