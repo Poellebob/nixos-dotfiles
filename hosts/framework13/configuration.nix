@@ -7,6 +7,8 @@
     ./hardware-configuration.nix
   ];
 
+  users.groups.libvirtd.members = [ "viggokh" ];
+
   boot = {
     loader = {
       grub = {
@@ -14,7 +16,6 @@
         device = "nodev";
         efiSupport = true;
         useOSProber = true;
-        theme = "${pkgs.kdePackages.breeze-grub}/grub/themes/breeze";
       };
       efi.canTouchEfiVariables = true;
     };
@@ -47,6 +48,11 @@
       logo = "${pkgs.nixos-icons}/share/icons/hicolor/128x128/apps/nix-snowflake.png";
     };
   };
+
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 16 * 1024;
+  }];
 
   programs.virt-manager.enable = true;
 

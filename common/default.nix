@@ -10,24 +10,6 @@
     inputs.dolphin-overlay.overlays.default
   ];
 
-  boot = {
-    loader = {
-      grub = {
-        enable = true;
-        device = "nodev";
-        efiSupport = true;
-      };
-      efi.canTouchEfiVariables = true;
-    };
-    kernelPackages = lib.mkDefault pkgs.linuxPackages;
-    kernelParams = [
-      "zswap.enabled=1"
-      "zswap.compressor=lz4"
-      "zswap.max_pool_percent=20"
-      "zswap.shrinker_enabled=1"
-    ];
-  };
-
   xdg.portal = {
     enable = true;
     wlr.enable = true;
@@ -44,7 +26,7 @@
     "flakes"
   ];
   
-    services.xserver.enable = true;
+  services.xserver.enable = true;
   services.displayManager.ly.enable = true;
 
   programs = {
@@ -80,11 +62,6 @@
     port = 9117;
   };
 
-  swapDevices = [{
-    device = "/var/lib/swapfile";
-    size = 16 * 1024;
-  }];
-
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Copenhagen";
@@ -117,7 +94,11 @@
       nerd-fonts.jetbrains-mono
     ];
   };
-
+  
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [];
+  };
 
   systemd.services.flatpak-repo = {
     wantedBy = [ "multi-user.target" ];
@@ -132,11 +113,6 @@
     flatpak.enable = true;
     upower.enable = true;
     fwupd.enable = true;
-  };
-
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [];
   };
 
   programs.steam.enable = true;
