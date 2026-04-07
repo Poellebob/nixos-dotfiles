@@ -33,6 +33,7 @@ in
       tor-browser
       qbittorrent
       prismlauncher
+      spotify
     ];
   };
 
