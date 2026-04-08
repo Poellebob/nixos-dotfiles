@@ -50,12 +50,6 @@
     pulse.enable = true;
   };
 
-  hardware.graphics = { 
-    enable = true;
-    enable32Bit = true;
-  };
-  hardware.bluetooth.enable = true;
-
   services.jackett = {
     enable = true;
     openFirewall = true;
@@ -77,6 +71,29 @@
     LC_TELEPHONE = "da_DK.UTF-8";
     LC_TIME = "da_DK.UTF-8";
   };
+
+  minima = {
+    displays = [
+      {
+        name     = "DP-1";
+        res      = "1920x1080";
+        position = { x = 0;     y = 0; };
+        scale    = 1.0;
+      }
+      {
+        name     = "HDMI-A-1";
+        res      = "1920x1080";
+        position = { x = -1920; y = 0; };
+        scale    = 1.0;
+      }
+    ];
+
+    workspaceOutputs = [
+      { workspace = "1";  output = "DP-1"; }
+      { workspace = "10"; output = "HDMI-A-1"; }
+    ];
+  };
+
 
   programs.direnv = {
     enable = true;
@@ -155,6 +172,7 @@
     kdePackages.kio-fuse
     kdePackages.kio-extras
     kdePackages.qtdeclarative
+    kdePackages.gwenview
     quickshell
     wireplumber
     vulkan-tools

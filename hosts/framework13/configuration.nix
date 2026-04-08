@@ -1,11 +1,22 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   imports = [
     ../../common
     ../../users/viggokh
     ./hardware-configuration.nix
+    inputs.minima.nixosModules.default
   ];
+
+  minima = {
+    wm       = "hyprland";
+    modifier = "Mod4";
+
+    apps = {
+      fileManager = "dolphin";
+      browser     = "zen-browser";
+    };
+  };
 
   users.groups.libvirtd.members = [ "viggokh" ];
 
@@ -64,8 +75,11 @@
   networking.hostName = "framework13";
 
   services.xserver.videoDrivers = [ "amdgpu" ];
-  hardware.graphics.enable = true;
   hardware.bluetooth.enable = true;
+  hardware.graphics = { 
+    enable = true;
+    enable32Bit = true;
+  };
 
   services.udev.packages = with pkgs; [
     platformio-core.udev

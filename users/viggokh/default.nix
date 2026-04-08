@@ -32,6 +32,8 @@ in
       qbittorrent
       prismlauncher
       spotify
+      discord
+      obs-studio
     ];
   };
 
@@ -46,6 +48,22 @@ in
       ];
       minima = {
         enable = true;
+
+        shell.enable   = true;
+        theming.enable = true;
+        enableBranding = true;
+
+        terminal = {
+          name    = "kitty";
+          package = pkgs.kitty;
+        };
+
+        minimaConfig = {
+          darkTheme = true;
+          wallpaper.engineEnabled = false;
+          panel.alwaysVisible     = true;
+        };
+
         vim = {
           enable = true;
 

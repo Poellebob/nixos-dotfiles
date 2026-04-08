@@ -1,11 +1,46 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   imports = [
     ../../common
     ../../users/viggokh
     ./hardware-configuration.nix
+    inputs.minima.nixosModules.default
   ];
+
+  minima = {
+    wm       = "sway";
+    modifier = "Mod4";
+
+    apps = {
+      fileManager = "dolphin";
+      browser     = "zen-browser";
+    };
+
+    autostart = [
+      "spotify"
+      "discord"
+    ];
+
+    specialWorkspaces = [
+      {
+        name         = "discord";
+        key          = "m";
+        rule         = ''app_id="discord|WebCord"'';
+        autostart    = false;
+      }
+      {
+        name      = "spotify";
+        key       = "s";
+        rule      = ''class="Spotify"'';
+      }
+      {
+        name      = "obs";
+        key       = "o";
+        rule      = ''app_id="obs-studio"'';
+      }
+    ];
+  };
 
   boot = {
     loader = {
@@ -25,7 +60,7 @@
       systemd.enable = true;
     };
 
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages;
 
     kernelParams = [
       "quiet"
@@ -62,7 +97,12 @@
     modesetting.enable = true;
     nvidiaSettings = true;
   };
-  hardware.graphics.enable32Bit = true;
+  hardware.graphics = { 
+    enable = true;
+    enable32Bit = true;
+  };
+
+  hardware.bluetooth.enable = true;
 
   console.keyMap = "dk-latin1";
 
@@ -84,9 +124,9 @@
   };
 
   programs.steam = { 
-    extraCompatPackages = with pkgs; [
-      nvidia-vaapi-driver
-    ];
+    # extraCompatPackages = with pkgs; [
+    #   nvidia-vaapi-driver
+    # ];
     remotePlay.openFirewall = true;
   };
 
