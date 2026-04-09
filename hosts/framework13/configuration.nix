@@ -9,13 +9,19 @@
   ];
 
   minima = {
-    wm       = "hyprland";
-    modifier = "Mod4";
+    displays = [
+      {
+        name     = "eDP-1";
+        res      = "2256x1504";
+        position = { x = 0; y = 0; };
+        scale    = 1.6;
+      }
+    ];
 
-    apps = {
-      fileManager = "dolphin";
-      browser     = "zen-browser";
-    };
+    workspaceOutputs = [
+      { workspace = "1";  output = "DP-1"; }
+      { workspace = "10"; output = "HDMI-A-1"; }
+    ];
   };
 
   users.groups.libvirtd.members = [ "viggokh" ];
