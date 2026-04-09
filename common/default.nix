@@ -1,5 +1,25 @@
 { config, pkgs, lib, inputs, ... }:
 
+let
+  tex = (pkgs.texlive.combine {
+    inherit (pkgs.texlive) scheme-full
+    dvisvgm 
+    dvipng 
+    wrapfig 
+    amsmath 
+    ulem 
+    hyperref 
+    capt-of
+    enumitem
+    float
+    starray
+    parskip
+    booktabs
+    xcolor
+    listings
+    geometry
+  ;});
+in
 {
   nixpkgs.overlays = [
     (final: prev: {
@@ -78,7 +98,7 @@
 
     apps = {
       fileManager = "dolphin";
-      browser     = "zen-browser";
+      browser     = "zen-beta";
     };
 
     autostart = [
@@ -88,10 +108,10 @@
 
     specialWorkspaces = [
       {
-        name         = "discord";
-        key          = "m";
-        rule         = ''app_id="discord|WebCord"'';
-        autostart    = false;
+        name      = "discord";
+        key       = "m";
+        rule      = ''app_id="discord|WebCord"'';
+        autostart = false;
       }
       {
         name      = "spotify";
@@ -114,6 +134,8 @@
 
   environment.variables.TEXINPUTS =
     ".:${pkgs.sagetex}/tex/latex/sagetex//:";
+  environment.variables.PYTHONPATH = 
+    "${pkgs.sagetex}/lib/python/site-packages:$PYTHONPATH";
 
   fonts = {
     enableDefaultPackages = true;
@@ -166,6 +188,7 @@
     lua
     luajit
     libreoffice-fresh
+    tex
     sage
     git
     ripgrep
