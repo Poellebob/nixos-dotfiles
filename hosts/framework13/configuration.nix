@@ -5,7 +5,6 @@
     ../../common
     ../../users/viggokh
     ./hardware-configuration.nix
-    inputs.minima.nixosModules.default
   ];
 
   minima = {

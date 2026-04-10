@@ -1,26 +1,34 @@
 { config, pkgs, lib, inputs, ... }:
 
-let
-  tex = (pkgs.texlive.combine {
-    inherit (pkgs.texlive) scheme-full
-    dvisvgm 
-    dvipng 
-    wrapfig 
-    amsmath 
-    ulem 
-    hyperref 
-    capt-of
-    enumitem
-    float
-    starray
-    parskip
-    booktabs
-    xcolor
-    listings
-    geometry
-  ;});
-in
 {
+  imports = [
+    inputs.minima.nixosModules.default
+  ];
+
+  minima.tex = {
+    enable = true;
+    scheme = "scheme-full";
+    packages = {
+      inherit (pkgs.texlive) 
+      dvisvgm 
+      dvipng 
+      wrapfig 
+      amsmath 
+      ulem 
+      hyperref 
+      capt-of 
+      enumitem 
+      float 
+      starray 
+      parskip 
+      booktabs 
+      xcolor 
+      listings 
+      geometry 
+      plantuml
+    ;};
+  };
+
   nixpkgs.overlays = [
     (final: prev: {
       jackett = prev.jackett.overrideAttrs (old: {
@@ -188,7 +196,6 @@ in
     lua
     luajit
     libreoffice-fresh
-    tex
     sage
     git
     ripgrep
