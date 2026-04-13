@@ -49,7 +49,7 @@ in
       minima = {
         enable = true;
 
-        shell.enable   = true;
+        shell.enable = true;
         theming.enable = true;
         enableBranding = true;
 
@@ -61,7 +61,7 @@ in
         minimaConfig = {
           darkTheme = true;
           wallpaper.engineEnabled = false;
-          panel.alwaysVisible     = true;
+          panel.alwaysVisible = true;
         };
 
         vim = {
@@ -84,10 +84,9 @@ in
             python = [ "black" ];
             c = [ "clang-format" ];
             cpp = [ "clang-format" ];
-            qml = [ "trim_whitespace" ];
             sh = [ "shfmt" ];
             bash = [ "shfmt" ];
-            tex = [ "latexindent" ];
+            qml = [ "trim_whitespace" ];
           };
 
           plugins = {

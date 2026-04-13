@@ -14,12 +14,13 @@
         home-manager.follows = "home-manager";
       };
     };
+    sagetex-py.url = "github:poellebob/sagetex-py-flake";
     minima = {
       url = "git+file:./minima";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, home-manager, dolphin-overlay, minima, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, dolphin-overlay, sagetex-py, minima, ... }@inputs:
   {
     nixosConfigurations.goonbox-3500 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";

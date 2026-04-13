@@ -38,6 +38,7 @@
     inputs.dolphin-overlay.overlays.default
   ];
 
+  xdg.mime.enable = true;
   xdg.portal = {
     enable = true;
     wlr.enable = true;
@@ -45,6 +46,7 @@
       pkgs.xdg-desktop-portal-gtk
       pkgs.kdePackages.xdg-desktop-portal-kde
     ];
+    config.common.default = [ "kde" "gtk" ];
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -143,7 +145,7 @@
   environment.variables.TEXINPUTS =
     ".:${pkgs.sagetex}/tex/latex/sagetex//:";
   environment.variables.PYTHONPATH = 
-    "${pkgs.sagetex}/lib/python/site-packages:$PYTHONPATH";
+    "${inputs.sagetex-py.packages.${pkgs.stdenv.hostPlatform.system}.default}/lib/python/site-packages";
 
   fonts = {
     enableDefaultPackages = true;
@@ -197,6 +199,7 @@
     luajit
     libreoffice-fresh
     sage
+    sagetex
     git
     ripgrep
     lazygit
@@ -207,12 +210,13 @@
     bluetui
     kdePackages.dolphin
     kdePackages.ark
-    kdePackages.discover
     kdePackages.breeze
     kdePackages.breeze-gtk
     kdePackages.kio
     kdePackages.kio-fuse
     kdePackages.kio-extras
+    kdePackages.kde-cli-tools
+    kdePackages.kservice
     kdePackages.qtdeclarative
     kdePackages.gwenview
     quickshell

@@ -15,6 +15,12 @@
         position = { x = 0; y = 0; };
         scale    = 1.6;
       }
+      {
+        name     = "DP-3";
+        res      = "1920x1080";
+        position = { x = -1920; y = 0; };
+        scale    = 1.0;
+      }
     ];
 
     workspaceOutputs = [
