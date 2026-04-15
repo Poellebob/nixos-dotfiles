@@ -28,7 +28,7 @@
         home-manager.nixosModules.home-manager
         ./hosts/goonbox-3500/configuration.nix
       ];
-      specialArgs = { inherit minima inputs; };
+      specialargs = { inherit minima inputs; };
     };
 
     nixosConfigurations.framework13 = nixpkgs.lib.nixosSystem {
