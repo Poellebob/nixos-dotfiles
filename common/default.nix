@@ -249,6 +249,7 @@
     bc
     fzf
     zoxide
+    cachix
     zsh
     fastfetch
     afetch

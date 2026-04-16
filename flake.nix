@@ -15,11 +15,13 @@
       };
     };
     sagetex-py.url = "github:poellebob/sagetex-py-flake";
+    blender-cuda.url = "github:adithyagenie/blender-cuda-nixos";
     minima = {
       url = "git+file:./minima";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
   outputs = { self, nixpkgs, home-manager, dolphin-overlay, sagetex-py, minima, ... }@inputs:
   {
     nixosConfigurations.goonbox-3500 = nixpkgs.lib.nixosSystem {
@@ -27,8 +29,14 @@
       modules = [
         home-manager.nixosModules.home-manager
         ./hosts/goonbox-3500/configuration.nix
+        {
+          nix.settings = {
+            substituters = [ "https://adithyagenie.cachix.org" ];
+            trusted-public-keys = [ "adithyagenie.cachix.org-1:h6BSMboeVfxyrULWuRQqAyweo4AJRATekb88xotfQwc=" ];
+          };
+        }
       ];
-      specialargs = { inherit minima inputs; };
+      specialArgs = { inherit minima inputs; };
     };
 
     nixosConfigurations.framework13 = nixpkgs.lib.nixosSystem {

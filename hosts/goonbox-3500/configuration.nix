@@ -129,6 +129,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    inputs.blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda
     libva
     libva-utils
   ];
