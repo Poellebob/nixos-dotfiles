@@ -8,6 +8,7 @@
   ];
 
   minima = {
+    enableNvidia = true;
     displays = [
       {
         name     = "DP-1";
