@@ -2,7 +2,10 @@
   description = "Viggo Kirkegaard Helstrups nixos configuration";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    dolphin-overlay.url = "github:rumboon/dolphin-overlay";
+    dolphin-overlay = {
+      url = "github:rumboon/dolphin-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,8 +24,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-
-  outputs = { self, nixpkgs, home-manager, dolphin-overlay, sagetex-py, minima, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, sagetex-py, minima, ... }@inputs:
   {
     nixosConfigurations.goonbox-3500 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";

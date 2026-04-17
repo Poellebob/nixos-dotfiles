@@ -1,8 +1,6 @@
 { config, pkgs, lib, minima, inputs, ... }:
 
-let 
-  zen-browser = inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default;
-in
+
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -21,7 +19,6 @@ in
     shell = pkgs.zsh;
 
     packages = with pkgs; [
-      zen-browser
       thunderbird
       vscodium
       opencode
@@ -44,7 +41,6 @@ in
       home.stateVersion = "25.11";
       imports = [ 
         minima.homeModules.default 
-        inputs.zen-browser.homeModules.beta
       ];
       minima = {
         enable = true;
@@ -52,11 +48,6 @@ in
         shell.enable = true;
         theming.enable = true;
         enableBranding = true;
-
-        terminal = {
-          name    = "kitty";
-          package = pkgs.kitty;
-        };
 
         minimaConfig = {
           darkTheme = true;

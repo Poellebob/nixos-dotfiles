@@ -35,19 +35,7 @@
         doCheck = false;
       });
     })
-    inputs.dolphin-overlay.overlays.default
   ];
-
-  xdg.mime.enable = true;
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.kdePackages.xdg-desktop-portal-kde
-    ];
-    config.common.default = [ "kde" "gtk" ];
-  };
 
   nixpkgs.config.allowUnfree = true;
 
@@ -106,9 +94,11 @@
     wm       = "sway";
     modifier = "Mod4";
 
-    apps = {
-      fileManager = "dolphin";
-      browser     = "zen-beta";
+    programs = {
+      browser = {
+        name = "zen-beta";
+        package = inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default;
+      };
     };
 
     autostart = [
@@ -208,17 +198,6 @@
     p7zip
     cloudflared
     bluetui
-    kdePackages.dolphin
-    kdePackages.ark
-    kdePackages.breeze
-    kdePackages.breeze-gtk
-    kdePackages.kio
-    kdePackages.kio-fuse
-    kdePackages.kio-extras
-    kdePackages.kde-cli-tools
-    kdePackages.kservice
-    kdePackages.qtdeclarative
-    kdePackages.gwenview
     quickshell
     wireplumber
     vulkan-tools
