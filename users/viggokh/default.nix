@@ -6,6 +6,8 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
+  programs.zsh.enable = true;
+
   users.users.viggokh = {
     isNormalUser = true;
     description = "Viggo Kirkegaard Helstrup";
@@ -51,7 +53,7 @@
 
         minimaConfig = {
           darkTheme = true;
-          wallpaper.engineEnabled = false;
+          wallpaper.engineEnabled = true;
           panel.alwaysVisible = true;
         };
 

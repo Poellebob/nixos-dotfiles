@@ -35,6 +35,7 @@
         doCheck = false;
       });
     })
+    inputs.dolphin-overlay.overlays.default
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -47,14 +48,6 @@
   services.xserver.enable = true;
   services.displayManager.ly.enable = true;
 
-  programs = {
-    zsh.enable = true;
-    sway = {
-      enable = true;
-      wrapperFeatures.gtk = true;
-      extraPackages = with pkgs; [];
-    };
-  };
 
   security.polkit.enable = true;
   security.rtkit.enable = true;
@@ -95,6 +88,10 @@
     modifier = "Mod4";
 
     programs = {
+      fileManager = {
+        name = "dolphin";
+        package = pkgs.kdePackages.dolphin;
+      };
       browser = {
         name = "zen-beta";
         package = inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default;
@@ -125,7 +122,6 @@
       }
     ];
   };
-
 
   programs.direnv = {
     enable = true;
