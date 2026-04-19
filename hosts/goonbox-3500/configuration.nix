@@ -96,14 +96,6 @@
 
   services.xserver.layout = "dk";
 
-  programs.sway.package = pkgs.sway.overrideAttrs (old: {
-    buildCommand = ''
-      ${old.buildCommand}
-      wrapProgram $out/bin/sway \
-        --add-flags "--unsupported-gpu"
-    '';
-  });
-
   programs.virt-manager.enable = true;
 
   virtualisation = {

@@ -27,6 +27,10 @@
       geometry 
       plantuml
     ;};
+    spell = [
+      "en"
+      "da"
+    ];
   };
 
   nixpkgs.overlays = [
