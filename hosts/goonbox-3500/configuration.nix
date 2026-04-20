@@ -14,13 +14,13 @@
         res      = "1920x1080";
         position = { x = 0; y = 0; };
         scale    = 1.0;
-        workspace = 10;
+        workspace = 1;
       };
       HDMI-A-1 = {
         res      = "1920x1080";
         position = { x = -1920; y = 0; };
         scale    = 1.0;
-        workspace = 1;
+        workspace = 10;
       };
     };
   };
@@ -83,6 +83,9 @@
   hardware.graphics = { 
     enable = true;
     enable32Bit = true;
+    extraPackages = with pkgs; [
+      cudaPackages.cudatoolkit
+    ];
   };
 
   hardware.bluetooth.enable = true;
@@ -105,9 +108,15 @@
     remotePlay.openFirewall = true;
   };
 
-  programs.alvr = {
+  services.wivrn = {
     enable = true;
     openFirewall = true;
+    steam = {
+      importOXRRuntimes = true;
+    };
+    defaultRuntime = true;
+    autoStart = true;
+    package = (pkgs.wivrn.override { cudaSupport = true; });
   };
 
   fileSystems."/home/viggokh/storage" = {
@@ -118,6 +127,7 @@
 
   environment.systemPackages = with pkgs; [
     inputs.blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda
+    wayvr
     libva
     libva-utils
   ];
