@@ -8,24 +8,19 @@
   ];
 
   minima = {
-    displays = [
-      {
-        name     = "eDP-1";
+    displays = {
+      eDP-1 = {
         res      = "2256x1504";
         position = { x = 0; y = 0; };
         scale    = 1.6;
-      }
-      {
-        name     = "DP-3";
+        workspace = 1;
+      };
+      DP-3 = {
         res      = "1920x1080";
         position = { x = -1920; y = 0; };
         scale    = 1.0;
-      }
-    ];
-
-    workspaceOutputs = [
-      { workspace = "1";  output = "eDP-1"; }
-    ];
+      };
+    };
   };
 
   users.groups.libvirtd.members = [ "viggokh" ];

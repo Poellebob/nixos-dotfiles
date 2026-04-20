@@ -52,7 +52,6 @@
   services.xserver.enable = true;
   services.displayManager.ly.enable = true;
 
-
   security.polkit.enable = true;
   security.rtkit.enable = true;
 
@@ -98,7 +97,9 @@
       };
       browser = {
         name = "zen-beta";
-        package = inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default;
+        package = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+          nativeMessagingHosts = [pkgs.firefoxpwa];
+        };
       };
     };
 
@@ -107,24 +108,26 @@
       "discord"
     ];
 
-    specialWorkspaces = [
-      {
-        name      = "discord";
-        key       = "m";
-        rule      = ''app_id="discord|WebCord"'';
-        autostart = false;
-      }
-      {
-        name      = "spotify";
-        key       = "s";
-        rule      = ''class="Spotify"'';
-      }
-      {
-        name      = "obs";
-        key       = "o";
-        rule      = ''app_id="obs-studio"'';
-      }
-    ];
+    specialWorkspaces = {
+      discord = {
+        key = "m";
+        rule = {
+          app_id = [
+            "discord"
+            "WebCord"
+          ];
+          class = ["discord"];
+        };
+      };
+      spotify = {
+        key = "s";
+        rule.class = ["Spotify"];
+      };
+      obs = {
+        key = "o";
+        rule.app_id = ["obs-studio"];
+      };
+    };
   };
 
   programs.direnv = {
