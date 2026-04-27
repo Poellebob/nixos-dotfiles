@@ -85,12 +85,13 @@ in
   }];
 
   users.groups.libvirtd.members = [ "viggokh" ];
+  users.extraGroups.docker.members = [ "viggokh" ];
 
   networking.hostName = "goonbox-3500";
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
-    open = false;
+    open = true;
     modesetting.enable = true;
     nvidiaSettings = true;
   };
@@ -115,6 +116,7 @@ in
   virtualisation = {
     libvirtd.enable = true;
     spiceUSBRedirection.enable = true;
+    docker.enable = true;
   };
   
   services.xserver.windowManager.i3.enable = true;
@@ -163,11 +165,15 @@ in
     };
   };
 
+  # hlvr:  DRI_PRIME=1 GDK_BACKEND=wayland SDL_VIDEODRIVER=wayland CLUTTER_BACKEND=wayland LIBVA_DRIVER_NAME=nvidia GBM_BACKEND=nvidia-drm __GLX_VENDOR_LIBRARY_NAME=nvidia QT_QPA_PLATFORM=xcb PRESSURE_VESSEL_FILESYSTEMS_RW=$XDG_RUNTIME_DIR/wivrn/comp_ipc PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1 %command% -console -vconsole +vr_fidelity_level_auto 0 +vr_fidelity_level 3
+
+
   services.wivrn = {
     enable = true;
     openFirewall = true;
     steam = {
       importOXRRuntimes = true;
+      package = config.programs.steam.package;
     };
     defaultRuntime = true;
     autoStart = true;
@@ -188,5 +194,11 @@ in
     libva-utils
     android-tools
     wlx-overlay-s
+    opencomposite
+    winboat
+    docker-compose
+    podman
+    podman-compose
+    freerdp
   ];
 }
