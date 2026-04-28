@@ -119,7 +119,6 @@ in
     docker.enable = true;
   };
   
-  services.xserver.windowManager.i3.enable = true;
   programs.steam = { 
     extraCompatPackages = with pkgs; [
       nvidia-vaapi-driver
@@ -156,7 +155,7 @@ in
             "${config.xdg.dataHome}/Steam/logs"
           ],
           "runtime" : [
-            "${pkgs.opencomposite}/lib/opencomposite"
+            "${pkgs.xrizer}/lib/xrizer"
           ],
           "version" : 1
         }
@@ -194,7 +193,7 @@ in
     libva-utils
     android-tools
     wlx-overlay-s
-    opencomposite
+    xrizer
     winboat
     docker-compose
     podman
