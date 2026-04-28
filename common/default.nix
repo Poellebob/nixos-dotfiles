@@ -246,6 +246,10 @@
     rose-pine-cursor
     xdg-utils
     cargo
+    mpv
+    vlc
+    libvlc
+    vlc-bittorrent
   ];
 
   system.stateVersion = "25.11";

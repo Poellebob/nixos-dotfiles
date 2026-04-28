@@ -89,6 +89,7 @@
   services.udev.packages = with pkgs; [
     platformio-core.udev
     openocd
+    airtame
   ];
 
   console.keyMap = "dk-latin1";
