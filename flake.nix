@@ -21,7 +21,7 @@
     blender-cuda.url = "github:adithyagenie/blender-cuda-nixos";
     minima = {
       url = "git+file:./minima";
-      inputs.nixpkgs.follows = "nixpkgs";
+      #inputs.nixpkgs.follows = "nixpkgs";
     };
   };
   outputs = { self, nixpkgs, home-manager, sagetex-py, minima, ... }@inputs:

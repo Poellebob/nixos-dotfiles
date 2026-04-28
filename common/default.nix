@@ -87,7 +87,7 @@
   };
 
   minima = {
-    wm       = "sway";
+    wm       = "swayfx";
     modifier = "Mod4";
 
     programs = {
@@ -174,10 +174,15 @@
     package = pkgs.steam.override {
       extraArgs = "-console";
     };
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
   };
   programs.kdeconnect.enable = true;
 
   environment.systemPackages = with pkgs; [
+    kdePackages.gwenview
+    kdePackages.ark
     hunspell
     hunspellDicts.da_DK
     aspell
