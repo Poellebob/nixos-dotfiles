@@ -127,6 +127,11 @@
         key = "o";
         rule.app_id = ["obs-studio"];
       };
+      TV = {
+        key = "t";
+        rule.app_id = ["stremio" ];
+        rule.class = ["Stremio"];
+      };
     };
   };
 
@@ -255,6 +260,7 @@
     vlc
     libvlc
     vlc-bittorrent
+    f3d
   ];
 
   system.stateVersion = "25.11";

@@ -8,6 +8,7 @@
   ];
 
   minima = {
+    enable = true;
     displays = {
       eDP-1 = {
         res      = "2256x1504";

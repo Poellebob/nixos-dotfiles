@@ -72,14 +72,21 @@
             bashls.enable = true;
           };
 
-          lsp.conform = {
+          lsp.formatter = {
             rust = [ "rustfmt" ];
             python = [ "black" ];
             c = [ "clang-format" ];
             cpp = [ "clang-format" ];
             sh = [ "shfmt" ];
             bash = [ "shfmt" ];
-            qml = [ "trim_whitespace" ];
+            qml = [ "qmlfmt"  ];
+          };
+
+          lsp.formatterOpts = {
+            qmlfmt.args = [
+              "--width" "80"
+              "--indent" "2"
+            ];
           };
 
           plugins = {
