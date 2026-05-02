@@ -127,6 +127,11 @@
         key = "o";
         rule.app_id = ["obs-studio"];
       };
+      TV = {
+        key = "t";
+        rule.app_id = ["stremio" ];
+        rule.class = ["Stremio"];
+      };
     };
   };
 
@@ -218,11 +223,44 @@
     networkmanager
     jemalloc
     dart-sass
+    brightnessctl
+    swww
+    python3
+    power-profiles-daemon
+    gvfs
+    cliphist
+    hyprlock
+    hypridle
+    kitty
+    qt5.qtwayland
+    qt6.qtwayland
+    nerd-fonts.jetbrains-mono
+    grim
+    slurp
+    swappy
+    jq
+    bc
+    fzf
+    zoxide
+    cachix
+    zsh
+    fastfetch
+    afetch
+    polkit
+    matugen
+    papirus-icon-theme
+    rose-pine-cursor
+    xdg-utils
     wl-clipboard
     cargo
     gamemode
     mangohud
     gamescope
+    mpv
+    vlc
+    libvlc
+    vlc-bittorrent
+    f3d
   ];
 
   system.stateVersion = "25.11";

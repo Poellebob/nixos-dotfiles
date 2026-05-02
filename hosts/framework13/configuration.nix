@@ -8,6 +8,7 @@
   ];
 
   minima = {
+    enable = true;
     displays = {
       eDP-1 = {
         res      = "2256x1504";
@@ -89,6 +90,7 @@
   services.udev.packages = with pkgs; [
     platformio-core.udev
     openocd
+    airtame
   ];
 
   console.keyMap = "dk-latin1";
