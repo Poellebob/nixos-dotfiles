@@ -174,9 +174,6 @@
     package = pkgs.steam.override {
       extraArgs = "-console";
     };
-    extraCompatPackages = with pkgs; [
-      proton-ge-bin
-    ];
   };
   programs.kdeconnect.enable = true;
 
@@ -222,35 +219,10 @@
     jemalloc
     dart-sass
     wl-clipboard
-    brightnessctl
-    swww
-    python3
-    power-profiles-daemon
-    gvfs
-    cliphist
-    hyprlock
-    hypridle
-    kitty
-    qt5.qtwayland
-    qt6.qtwayland
-    nerd-fonts.jetbrains-mono
-    grim
-    slurp
-    swappy
-    jq
-    bc
-    fzf
-    zoxide
-    cachix
-    zsh
-    fastfetch
-    afetch
-    polkit
-    matugen
-    papirus-icon-theme
-    rose-pine-cursor
-    xdg-utils
     cargo
+    gamemode
+    mangohud
+    gamescope
   ];
 
   system.stateVersion = "25.11";

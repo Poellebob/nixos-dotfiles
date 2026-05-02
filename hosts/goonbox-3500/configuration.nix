@@ -2,16 +2,6 @@
 
 let
   wivrnpkg = (pkgs.wivrn.override { cudaSupport = true; });
-  wayvr-wrapped = pkgs.symlinkJoin {
-    name = "wayvr-wrapped";
-    paths = [ pkgs.wayvr ];
-    nativeBuildInputs = [ pkgs.makeWrapper ];
-    postBuild = ''
-      wrapProgram $out/bin/wayvr \
-        --run 'export PRESSURE_VESSEL_FILESYSTEMS_RW="$XDG_RUNTIME_DIR/wivrn/comp_ipc"' \
-        --set PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES 1
-    '';
-  };
 in
 {
   imports = [
@@ -19,6 +9,21 @@ in
     ../../users/viggokh
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.home-manager
+  ];
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      wayvr = prev.symlinkJoin {
+        name = "wayvr";
+        paths = [ prev.wayvr ];
+        nativeBuildInputs = [ prev.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/wayvr \
+            --run 'export PRESSURE_VESSEL_FILESYSTEMS_RW="$XDG_RUNTIME_DIR/wivrn/comp_ipc"' \
+            --run 'export PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1'
+        '';      
+      };
+    })
   ];
 
   minima = {
@@ -91,7 +96,7 @@ in
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
-    open = true;
+    open = false;
     modesetting.enable = true;
     nvidiaSettings = true;
   };
@@ -124,48 +129,45 @@ in
       nvidia-vaapi-driver
     ];
     remotePlay.openFirewall = true;
-    package = lib.mkDefault (
-      pkgs.steam.override (prev: {
-        extraEnv =
-        {
-          QT_QPA_PLATFORM = "xcb";
-          PRESSURE_VESSEL_FILESYSTEMS_RW = "$XDG_RUNTIME_DIR/wivrn/comp_ipc";
-          PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES = 1;
-        }
-        // (prev.extraEnv or {});
-      })
-    );
+    # package = lib.mkDefault (
+    #   pkgs.steam.override (prev: {
+    #     extraEnv =
+    #     {
+    #       QT_QPA_PLATFORM = "xcb";
+    #       PRESSURE_VESSEL_FILESYSTEMS_RW = "$XDG_RUNTIME_DIR/wivrn/comp_ipc";
+    #       PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES = 1;
+    #     }
+    #     // (prev.extraEnv or {});
+    #   })
+    # );
   };
   environment.sessionVariables.LIBVA_DRIVER_NAME = "nvidia";
-  home-manager.users.viggokh = { config, pkgs, ... }: {
-    xdg.configFile."openxr/1/active_runtime.json" = {
-      source = "${wivrnpkg}/share/openxr/1/openxr_wivrn.json";
-      force = true;
-    };
-
-    xdg.configFile."openvr/openvrpaths.vrpath" = {
-      text = ''
-        {
-          "config" : [
-            "${config.xdg.dataHome}/Steam/config"
-          ],
-          "external_drivers" : null,
-          "jsonid" : "vrpathreg",
-          "log" : [
-            "${config.xdg.dataHome}/Steam/logs"
-          ],
-          "runtime" : [
-            "${pkgs.xrizer}/lib/xrizer"
-          ],
-          "version" : 1
-        }
-      '';
-      force = true;
-    };
-  };
-
-  # hlvr:  DRI_PRIME=1 GDK_BACKEND=wayland SDL_VIDEODRIVER=wayland CLUTTER_BACKEND=wayland LIBVA_DRIVER_NAME=nvidia GBM_BACKEND=nvidia-drm __GLX_VENDOR_LIBRARY_NAME=nvidia QT_QPA_PLATFORM=xcb PRESSURE_VESSEL_FILESYSTEMS_RW=$XDG_RUNTIME_DIR/wivrn/comp_ipc PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1 %command% -console -vconsole +vr_fidelity_level_auto 0 +vr_fidelity_level 3
-
+  # home-manager.users.viggokh = { config, pkgs, ... }: {
+  #   xdg.configFile."openxr/1/active_runtime.json" = {
+  #     source = "${wivrnpkg}/share/openxr/1/openxr_wivrn.json";
+  #     force = true;
+  #   };
+  #
+  #   xdg.configFile."openvr/openvrpaths.vrpath" = {
+  #     text = ''
+  #       {
+  #         "config" : [
+  #           "${config.xdg.dataHome}/Steam/config"
+  #         ],
+  #         "external_drivers" : null,
+  #         "jsonid" : "vrpathreg",
+  #         "log" : [
+  #           "${config.xdg.dataHome}/Steam/logs"
+  #         ],
+  #         "runtime" : [
+  #           "${pkgs.xrizer}/lib/xrizer"
+  #         ],
+  #         "version" : 1
+  #       }
+  #     '';
+  #     force = true;
+  #   };
+  # };
 
   services.wivrn = {
     enable = true;
@@ -187,12 +189,10 @@ in
 
   environment.systemPackages = with pkgs; [
     inputs.blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda
-    nvidia-vaapi-driver
-    wayvr-wrapped
+    wayvr
     libva
     libva-utils
     android-tools
-    wlx-overlay-s
     xrizer
     winboat
     docker-compose
