@@ -1,15 +1,42 @@
 {
   description = "Viggo Kirkegaard Helstrups nixos configuration";
+
+  nixConfig = {
+    extra-substituters = [ "https://playit-nixos-module.cachix.org" ];
+    extra-trusted-public-keys = [ "playit-nixos-module.cachix.org-1:22hBXWXBbd/7o1cOnh+p0hpFUVk9lPdRLX3p5YSfRz4=" ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # pterodactyl = {
+    #   url = "git+https://codeberg.org/Poellebob/pterodactyl-flake.git";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+
+    playit = {
+      url = "github:pedorich-n/playit-nixos-module";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     dolphin-overlay = {
       url = "github:rumboon/dolphin-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    millennium = {
+      url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs = {
@@ -17,6 +44,7 @@
         home-manager.follows = "home-manager";
       };
     };
+
     sagetex-py.url = "github:poellebob/sagetex-py-flake";
     blender-cuda.url = "github:adithyagenie/blender-cuda-nixos";
     minima = {
@@ -24,11 +52,13 @@
       #inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, home-manager, sagetex-py, minima, ... }@inputs:
+
+  outputs = { self, nixpkgs, home-manager, millennium, sagetex-py, playit, agenix, minima, ... }@inputs:
   {
     nixosConfigurations.goonbox-3500 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
+        agenix.nixosModules.default
         home-manager.nixosModules.home-manager
         ./hosts/goonbox-3500/configuration.nix
         {
@@ -44,10 +74,21 @@
     nixosConfigurations.framework13 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
+        agenix.nixosModules.default
         home-manager.nixosModules.home-manager
         ./hosts/framework13/configuration.nix
       ];
       specialArgs = { inherit minima inputs; };
+    };
+    
+    nixosConfigurations.homeserver = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        agenix.nixosModules.default
+        playit.nixosModules.default
+        ./hosts/homeserver/configuration.nix
+      ];
+      specialArgs = { inherit inputs; };
     };
   };
 }

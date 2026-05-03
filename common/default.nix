@@ -40,6 +40,7 @@
       });
     })
     inputs.dolphin-overlay.overlays.default
+    inputs.millennium.overlays.default
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -87,7 +88,8 @@
   };
 
   minima = {
-    wm       = "swayfx";
+    enable = true;
+    wm = "swayfx";
     modifier = "Mod4";
 
     programs = {
@@ -176,13 +178,14 @@
 
   programs.steam = {
     enable = true;
-    package = pkgs.steam.override {
+    package = pkgs.millennium-steam.override {
       extraArgs = "-console";
     };
   };
   programs.kdeconnect.enable = true;
 
   environment.systemPackages = with pkgs; [
+    inputs.agenix.packages."${pkgs.stdenv.hostPlatform.system}".default
     kdePackages.gwenview
     kdePackages.ark
     hunspell
