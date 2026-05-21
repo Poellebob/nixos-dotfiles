@@ -5,5 +5,6 @@ in
 {
   "cloudflared-token.age".publicKeys = [ goonbox homeserver ];
   "playit-secret.age".publicKeys = [ goonbox homeserver ];
+  "windrose-env.age".publicKeys = [ goonbox homeserver ];
 
 }

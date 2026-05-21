@@ -2,6 +2,13 @@
 
 let
   wivrnpkg = (pkgs.wivrn.override { cudaSupport = true; });
+  vrrun = pkgs.writeShellScriptBin "vrrun" ''
+    exec env \
+      PRESSURE_VESSEL_FILESYSTEMS_RW="$XDG_RUNTIME_DIR/wivrn/comp_ipc" \
+      PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1 \
+      QT_QPA_PLATFORM=xcb \
+      "$@"
+  '';
 in
 {
   imports = [
@@ -129,45 +136,35 @@ in
       nvidia-vaapi-driver
     ];
     remotePlay.openFirewall = true;
-    # package = lib.mkDefault (
-    #   pkgs.steam.override (prev: {
-    #     extraEnv =
-    #     {
-    #       QT_QPA_PLATFORM = "xcb";
-    #       PRESSURE_VESSEL_FILESYSTEMS_RW = "$XDG_RUNTIME_DIR/wivrn/comp_ipc";
-    #       PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES = 1;
-    #     }
-    #     // (prev.extraEnv or {});
-    #   })
-    # );
   };
   environment.sessionVariables.LIBVA_DRIVER_NAME = "nvidia";
-  # home-manager.users.viggokh = { config, pkgs, ... }: {
-  #   xdg.configFile."openxr/1/active_runtime.json" = {
-  #     source = "${wivrnpkg}/share/openxr/1/openxr_wivrn.json";
-  #     force = true;
-  #   };
-  #
-  #   xdg.configFile."openvr/openvrpaths.vrpath" = {
-  #     text = ''
-  #       {
-  #         "config" : [
-  #           "${config.xdg.dataHome}/Steam/config"
-  #         ],
-  #         "external_drivers" : null,
-  #         "jsonid" : "vrpathreg",
-  #         "log" : [
-  #           "${config.xdg.dataHome}/Steam/logs"
-  #         ],
-  #         "runtime" : [
-  #           "${pkgs.xrizer}/lib/xrizer"
-  #         ],
-  #         "version" : 1
-  #       }
-  #     '';
-  #     force = true;
-  #   };
-  # };
+
+  home-manager.users.viggokh = { config, pkgs, ... }: {
+    xdg.configFile."openxr/1/active_runtime.json" = {
+      source = "${wivrnpkg}/share/openxr/1/openxr_wivrn.json";
+      force = true;
+    };
+
+    xdg.configFile."openvr/openvrpaths.vrpath" = {
+      text = ''
+        {
+          "config" : [
+            "${config.xdg.dataHome}/Steam/config"
+          ],
+          "external_drivers" : null,
+          "jsonid" : "vrpathreg",
+          "log" : [
+            "${config.xdg.dataHome}/Steam/logs"
+          ],
+          "runtime" : [
+            "${pkgs.xrizer}/lib/xrizer"
+          ],
+          "version" : 1
+        }
+      '';
+      force = true;
+    };
+  };
 
   services.wivrn = {
     enable = true;
@@ -188,8 +185,10 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    vrrun
     inputs.blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda
     wayvr
+    shadps4
     libva
     libva-utils
     android-tools

@@ -32,6 +32,7 @@
       prismlauncher
       spotify
       discord
+      equibop
       obs-studio
     ];
   };
@@ -56,6 +57,39 @@
           wallpaper.engineEnabled = true;
           panel.alwaysVisible = true;
         };
+
+        autostart = [
+          "spotify"
+          "equibop"
+        ];
+
+        specialWorkspaces = {
+          discord = {
+            key = "m";
+            rule = {
+              app_id = [
+                "discord"
+                "WebCord"
+                "equibop"
+              ];
+              class = ["discord"];
+            };
+          };
+          spotify = {
+            key = "s";
+            rule.class = ["Spotify"];
+          };
+          obs = {
+            key = "o";
+            rule.app_id = ["obs-studio"];
+          };
+          TV = {
+            key = "t";
+            rule.app_id = ["stremio" ];
+            rule.class = ["Stremio"];
+          };
+        };
+
 
         vim = {
           enable = true;
@@ -115,6 +149,22 @@
             }
           ];
         };
+      };
+
+      home.activation.configureEquibop = inputs.home-manager.lib.hm.dag.entryAfter ["writeBoundary"] ''
+        SETTINGS_FILE="$HOME/.config/equibop/settings/settings.json"
+        
+        mkdir -p "$(dirname "$SETTINGS_FILE")"
+        
+        if [ -f "$SETTINGS_FILE" ]; then
+          ${pkgs.jq}/bin/jq '. + {"enabledThemes": ["midnight.theme.css"]}' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
+        else
+          echo '{"enabledThemes": ["midnight.theme.css"]}' > "$SETTINGS_FILE"
+        fi
+      '';
+      xdg.configFile."equibop/themes/midnight.theme.css".source = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/refact0r/midnight-discord/d16c0dd0b403bc0508a22b7ba2048a669a9887ce/themes/midnight.theme.css";
+        hash = "sha256-OKHj53x/p0UCtR6bqCXp7G6fnSrgZoKEcg6UVKv0d8I=";
       };
     };
   };

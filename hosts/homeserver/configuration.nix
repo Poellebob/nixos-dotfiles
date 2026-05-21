@@ -18,6 +18,10 @@ in
     secrets.cloudflared-token = {
       file = ./secrets/cloudflared-token.age;
     };
+    secrets.windrose-env = {
+      file = ./secrets/windrose-env.age;
+      owner = "root";
+    };
   };
 
   nix.settings.experimental-features = [
@@ -66,10 +70,13 @@ in
   };
 
   users.users.games = {
+    uid = 1001;
     isNormalUser = true;
     description = "minecraft";
     openssh.authorizedKeys.keys = sshkeys ++ adminkeys;
   };
+
+  virtualisation.docker.enable = true;
 
   services.openssh = {
     enable = true;
@@ -95,6 +102,11 @@ in
     enable = true;
     secretPath = config.age.secrets.playit-secret.path;
   };
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [];
+  };
   
   systemd.services.minecraft-server = {
     description = "Minecraft Server";
@@ -114,37 +126,26 @@ in
     };
   };
 
-  # systemd.services.windrose-install = {
-  #   description = "Windrose Dedicated Server - SteamCMD install/update";
-  #   wantedBy = [ "multi-user.target" ];
-  #   before = [ "windrose-server.service" ];
-  #
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     User = "games";
-  #     ExecStart = "${pkgs.steamcmd}/bin/steamcmd +force_install_dir /home/games/windrose-server +login anonymous +app_update 4129620 validate +quit";
-  #     RemainAfterExit = true;
-  #   };
-  # };
-  #
-  # systemd.services.windrose-server = {
-  #   description = "Windrose Dedicated Server";
-  #   wantedBy = [ "multi-user.target" ];
-  #   after = [ "network.target" "windrose-install.service" ];
-  #   requires = [ "windrose-install.service" ];
-  #
-  #   serviceConfig = {
-  #     Type = "simple";
-  #     User = "games";
-  #     WorkingDirectory = "/home/games/windrose-server";
-  #     ExecStart = "/home/games/windrose-server/WindroseServer.x86_64";
-  #     Restart = "on-failure";
-  #     RestartSec = "10s";
-  #
-  #     NonNewPrivileges = true;
-  #     PrivateTmp = true;
-  #   };
-  # };
+  virtualisation.oci-containers = {
+    backend = "docker";
+    containers.windrose = {
+      image = "indifferentbroccoli/windrose-server-docker";
+      autoStart = true;
+      volumes = [
+        "/home/games/windrose/server-files:/home/steam/server-files"
+      ];
+      environment = {
+        PUID = "1001";
+        PGID = "100"; # users group
+        UPDATE_ON_START = "true";
+        SERVER_NAME = "SlaveUndertheTY Windrose";
+        MAX_PLAYERS = "10";
+      };
+      environmentFiles = [
+        config.age.secrets.windrose-env.path
+      ];
+    };
+  };
   
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [

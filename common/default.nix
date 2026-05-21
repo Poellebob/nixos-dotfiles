@@ -104,37 +104,6 @@
         };
       };
     };
-
-    autostart = [
-      "spotify"
-      "discord"
-    ];
-
-    specialWorkspaces = {
-      discord = {
-        key = "m";
-        rule = {
-          app_id = [
-            "discord"
-            "WebCord"
-          ];
-          class = ["discord"];
-        };
-      };
-      spotify = {
-        key = "s";
-        rule.class = ["Spotify"];
-      };
-      obs = {
-        key = "o";
-        rule.app_id = ["obs-studio"];
-      };
-      TV = {
-        key = "t";
-        rule.app_id = ["stremio" ];
-        rule.class = ["Stremio"];
-      };
-    };
   };
 
   programs.direnv = {
@@ -182,10 +151,12 @@
       extraArgs = "-console";
     };
   };
+  hardware.steam-hardware.enable = true;
   programs.kdeconnect.enable = true;
 
   environment.systemPackages = with pkgs; [
     inputs.agenix.packages."${pkgs.stdenv.hostPlatform.system}".default
+    godotPackages_4_6.godot
     kdePackages.gwenview
     kdePackages.ark
     hunspell
@@ -196,6 +167,7 @@
     vim
     biber
     zathura
+    kdePackages.kdenlive
     gnumake
     pyright
     libclang
@@ -222,6 +194,7 @@
     libgtop
     bluez
     bluez-tools
+    unrar
     btop
     networkmanager
     jemalloc
