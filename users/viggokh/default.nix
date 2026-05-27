@@ -7,6 +7,31 @@
   ];
 
   programs.zsh.enable = true;
+  
+  age.secrets.searxng-secret = {
+    file = ../../secrets/searxng.age;
+    owner = "searx";
+  };
+
+  services.searx = {
+    enable = true;
+    redisCreateLocally = true;
+    environmentFile = config.age.secrets.searxng-secret.path;
+    settings = {
+      server = {
+        bind_address = "127.0.0.1";
+        port = 8888;
+      };
+      general = {
+        debug = false;
+        instance_name = "searx";
+      };
+      ui = {
+        default_theme = "simple";
+        theme_args.simple_style = "auto";
+      };
+    };
+  };
 
   users.users.viggokh = {
     isNormalUser = true;
@@ -32,7 +57,6 @@
       prismlauncher
       spotify
       discord
-      equibop
       obs-studio
     ];
   };
@@ -40,17 +64,54 @@
   home-manager = {
     useUserPackages = true;
     extraSpecialArgs = { inherit minima; };
-    users.viggokh = {
+    users.viggokh = { config, pkgs, ... }: {
       home.stateVersion = "25.11";
       imports = [ 
         minima.homeModules.default 
+        inputs.zen-browser.homeModules.default
       ];
+
+      nixpkgs.config.allowUnfree = true;
+
+      programs.zen-browser.profiles.default.search = {
+        force = true;
+        default = "searxng";
+        engines = {
+          searxng = {
+            name = "SearXNG";
+            urls = [{ template = "http://127.0.0.1:8888/search?q={searchTerms}"; }];
+            definedAliases = [ "@s" ];
+          };
+          google = {
+            name = "Google";
+            urls = [{ template = "https://www.google.com/search?q={searchTerms}"; }];
+            definedAliases = [ "@g" ];
+          };
+          github = {
+            name = "GitHub";
+            urls = [{ template = "https://github.com/search?q={searchTerms}"; }];
+            definedAliases = [ "@gh" ];
+          };
+          nixpkgs = {
+            name = "Nixpkgs";
+            urls = [{ template = "https://search.nixos.org/packages?query={searchTerms}"; }];
+            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            definedAliases = [ "@np" ];
+          };
+          mynixos = {
+            name = "My NixOS";
+            urls = [{ template = "https://mynixos.com/search?q={searchTerms}"; }];
+            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            definedAliases = [ "@nx" ];
+          };
+        };
+      };
+
       minima = {
         enable = true;
 
         shell.enable = true;
         theming.enable = true;
-        enableBranding = true;
 
         minimaConfig = {
           darkTheme = true;
@@ -59,8 +120,9 @@
         };
 
         autostart = [
-          "spotify"
-          "equibop"
+          "${pkgs.spotify}/bin/spotify --disable-gpu"
+          "${pkgs.discord}/bin/discord --disable-gpu"
+          "steam -silent"
         ];
 
         specialWorkspaces = {
@@ -69,10 +131,10 @@
             rule = {
               app_id = [
                 "discord"
-                "WebCord"
-                "equibop"
               ];
-              class = ["discord"];
+              class = [
+                "discord"
+              ];
             };
           };
           spotify = {
@@ -149,22 +211,6 @@
             }
           ];
         };
-      };
-
-      home.activation.configureEquibop = inputs.home-manager.lib.hm.dag.entryAfter ["writeBoundary"] ''
-        SETTINGS_FILE="$HOME/.config/equibop/settings/settings.json"
-        
-        mkdir -p "$(dirname "$SETTINGS_FILE")"
-        
-        if [ -f "$SETTINGS_FILE" ]; then
-          ${pkgs.jq}/bin/jq '. + {"enabledThemes": ["midnight.theme.css"]}' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
-        else
-          echo '{"enabledThemes": ["midnight.theme.css"]}' > "$SETTINGS_FILE"
-        fi
-      '';
-      xdg.configFile."equibop/themes/midnight.theme.css".source = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/refact0r/midnight-discord/d16c0dd0b403bc0508a22b7ba2048a669a9887ce/themes/midnight.theme.css";
-        hash = "sha256-OKHj53x/p0UCtR6bqCXp7G6fnSrgZoKEcg6UVKv0d8I=";
       };
     };
   };

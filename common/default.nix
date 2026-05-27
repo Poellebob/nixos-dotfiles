@@ -38,6 +38,9 @@
       jackett = prev.jackett.overrideAttrs (old: {
         doCheck = false;
       });
+      zen-browser = inputs.zen-browser.packages.${prev.stdenv.hostPlatform.system}.default.override {
+        nativeMessagingHosts = [ prev.firefoxpwa ];
+      };
     })
     inputs.dolphin-overlay.overlays.default
     inputs.millennium.overlays.default
@@ -99,9 +102,7 @@
       };
       browser = {
         name = "zen-beta";
-        package = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-          nativeMessagingHosts = [pkgs.firefoxpwa];
-        };
+        package = pkgs.zen-browser;
       };
     };
   };
@@ -195,6 +196,7 @@
     bluez
     bluez-tools
     unrar
+    p7zip
     btop
     networkmanager
     jemalloc

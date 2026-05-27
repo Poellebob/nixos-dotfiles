@@ -13,13 +13,13 @@ in
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   
     secrets.playit-secret = {
-      file = ./secrets/playit-secret.age;
+      file = ../../secrets/playit-secret.age;
     };
     secrets.cloudflared-token = {
-      file = ./secrets/cloudflared-token.age;
+      file = ../../secrets/cloudflared-token.age;
     };
     secrets.windrose-env = {
-      file = ./secrets/windrose-env.age;
+      file = ../../secrets/windrose-env.age;
       owner = "root";
     };
   };

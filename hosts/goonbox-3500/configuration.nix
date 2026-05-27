@@ -33,6 +33,10 @@ in
     })
   ];
 
+  age = { 
+    identityPaths = [ "/home/viggokh/.ssh/id_ed25519" ];
+  };
+
   minima = {
     enableNvidia = true;
     displays = {
@@ -46,7 +50,7 @@ in
         res      = "1920x1080";
         position = { x = -1920; y = 0; };
         scale    = 1.0;
-        workspace = 10;
+        workspace = "discord";
       };
     };
   };
@@ -139,30 +143,32 @@ in
   };
   environment.sessionVariables.LIBVA_DRIVER_NAME = "nvidia";
 
-  home-manager.users.viggokh = { config, pkgs, ... }: {
-    xdg.configFile."openxr/1/active_runtime.json" = {
-      source = "${wivrnpkg}/share/openxr/1/openxr_wivrn.json";
-      force = true;
-    };
+  specialisation.vr.configuration = {
+    home-manager.users.viggokh = { config, pkgs, ... }: {
+      xdg.configFile."openxr/1/active_runtime.json" = {
+        source = "${wivrnpkg}/share/openxr/1/openxr_wivrn.json";
+        force = true;
+      };
 
-    xdg.configFile."openvr/openvrpaths.vrpath" = {
-      text = ''
-        {
-          "config" : [
-            "${config.xdg.dataHome}/Steam/config"
-          ],
-          "external_drivers" : null,
-          "jsonid" : "vrpathreg",
-          "log" : [
-            "${config.xdg.dataHome}/Steam/logs"
-          ],
-          "runtime" : [
-            "${pkgs.xrizer}/lib/xrizer"
-          ],
-          "version" : 1
-        }
-      '';
-      force = true;
+      xdg.configFile."openvr/openvrpaths.vrpath" = {
+        text = ''
+          {
+            "config" : [
+              "${config.xdg.dataHome}/Steam/config"
+            ],
+            "external_drivers" : null,
+            "jsonid" : "vrpathreg",
+            "log" : [
+              "${config.xdg.dataHome}/Steam/logs"
+            ],
+            "runtime" : [
+              "${pkgs.xrizer}/lib/xrizer"
+            ],
+            "version" : 1
+          }
+        '';
+        force = true;
+      };
     };
   };
 
@@ -198,5 +204,6 @@ in
     podman
     podman-compose
     freerdp
+    dolphin-emu 
   ];
 }
