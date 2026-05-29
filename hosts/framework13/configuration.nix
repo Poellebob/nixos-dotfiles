@@ -24,6 +24,10 @@
     };
   };
 
+  age = { 
+    identityPaths = [ "/home/viggokh/.ssh/id_ed25519" ];
+  };
+
   users.groups.libvirtd.members = [ "viggokh" ];
 
   boot = {
