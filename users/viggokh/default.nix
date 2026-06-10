@@ -1,6 +1,5 @@
 { config, pkgs, lib, minima, inputs, ... }:
 
-
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -8,9 +7,14 @@
 
   programs.zsh.enable = true;
   
-  age.secrets.searxng-secret = {
-    file = ../../secrets/searxng.age;
-    owner = "searx";
+  age.secrets = {
+    searxng-secret = {
+      file = ../../secrets/searxng.age;
+      owner = "searx";
+    };
+    cemu-keys = {
+      file = ../../secrets/cemu-keys.age;
+    };
   };
 
   services.searx = {
@@ -33,6 +37,8 @@
     };
   };
 
+  nix.settings.trusted-users = [ "viggokh" ];
+
   users.users.viggokh = {
     isNormalUser = true;
     description = "Viggo Kirkegaard Helstrup";
@@ -51,27 +57,37 @@
       opencode
       obsidian
       ungoogled-chromium
-      protonvpn-gui
+      proton-vpn
       tor-browser
       qbittorrent
       prismlauncher
       spotify
-      discord
+      vesktop
       obs-studio
+      cemu
+      dwarf-fortress 
+      dwarf-fortress-packages.cla-theme
     ];
   };
 
   home-manager = {
     useUserPackages = true;
-    extraSpecialArgs = { inherit minima; };
-    users.viggokh = { config, pkgs, ... }: {
-      home.stateVersion = "25.11";
+    extraSpecialArgs = { inherit minima inputs; nixosConfig = config; };
+    users.viggokh = { config, pkgs, nixosConfig, ... }: {
+      home.stateVersion = "26.05";
       imports = [ 
         minima.homeModules.default 
         inputs.zen-browser.homeModules.default
       ];
 
+      home.sessionVariables = {
+        EDITOR = "nvim";
+      };
+
       nixpkgs.config.allowUnfree = true;
+
+      home.file.".config/Cemu/keys.txt".source = config.lib.file.mkOutOfStoreSymlink 
+        nixosConfig.age.secrets.cemu-keys.path;
 
       programs.zen-browser.profiles.default.search = {
         force = true;
@@ -121,7 +137,7 @@
 
         autostart = [
           "${pkgs.spotify}/bin/spotify --disable-gpu"
-          "${pkgs.discord}/bin/discord --disable-gpu"
+          "${pkgs.vesktop}/bin/vesktop --disable-gpu"
           "steam -silent"
         ];
 
@@ -131,9 +147,11 @@
             rule = {
               app_id = [
                 "discord"
+                "vesktop"
               ];
               class = [
                 "discord"
+                "vesktop"
               ];
             };
           };

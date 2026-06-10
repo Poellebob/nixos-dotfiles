@@ -38,12 +38,23 @@
       jackett = prev.jackett.overrideAttrs (old: {
         doCheck = false;
       });
-      zen-browser = inputs.zen-browser.packages.${prev.stdenv.hostPlatform.system}.default.override {
-        nativeMessagingHosts = [ prev.firefoxpwa ];
-      };
+      zen-browser = inputs.zen-browser.packages.${prev.stdenv.hostPlatform.system}.default;
+      kdePackages = prev.kdePackages.overrideScope (kfinal: kprev: {
+        dolphin = prev.symlinkJoin {
+          name = "dolphin-wrapped";
+          paths = [ kprev.dolphin ];
+          nativeBuildInputs = [ prev.makeWrapper ];
+          postBuild = ''
+            rm $out/bin/dolphin
+            makeWrapper ${kprev.dolphin}/bin/dolphin $out/bin/dolphin \
+              --set XDG_CONFIG_DIRS "${prev.kdePackages.kservice}/etc/xdg:$XDG_CONFIG_DIRS" \
+              --run "${kprev.kservice}/bin/kbuildsycoca6 --noincremental ${prev.kdePackages.kservice}/etc/xdg/menus/applications.menu"
+          '';
+        };
+      });
     })
-    inputs.dolphin-overlay.overlays.default
     inputs.millennium.overlays.default
+    inputs.notsh.overlays.default
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -156,90 +167,134 @@
   programs.kdeconnect.enable = true;
 
   environment.systemPackages = with pkgs; [
-    inputs.agenix.packages."${pkgs.stdenv.hostPlatform.system}".default
-    godotPackages_4_6.godot
-    kdePackages.gwenview
-    kdePackages.ark
-    hunspell
-    hunspellDicts.da_DK
-    aspell
-    aspellDicts.da
-    appimage-run
-    vim
-    biber
-    zathura
-    kdePackages.kdenlive
+    # Development
+    devenv
     gnumake
-    pyright
-    libclang
-    platformio
-    avrdude
-    airtame
-    firefoxpwa
-    lua
-    luajit
-    libreoffice-fresh
-    sage
-    sagetex
     git
     ripgrep
     lazygit
-    wget
     curl
-    p7zip
-    cloudflared
-    bluetui
-    quickshell
-    wireplumber
-    vulkan-tools
-    libgtop
-    bluez
-    bluez-tools
-    unrar
-    p7zip
-    btop
-    networkmanager
-    jemalloc
-    dart-sass
-    brightnessctl
-    swww
-    python3
-    power-profiles-daemon
-    gvfs
-    cliphist
-    hyprlock
-    hypridle
-    kitty
-    qt5.qtwayland
-    qt6.qtwayland
-    nerd-fonts.jetbrains-mono
-    grim
-    slurp
-    swappy
+    wget
     jq
     bc
     fzf
     zoxide
     cachix
-    zsh
-    fastfetch
-    afetch
-    polkit
-    matugen
-    papirus-icon-theme
-    rose-pine-cursor
-    xdg-utils
-    wl-clipboard
+
+    # Languages & Toolchains
+    python3
+    lua
+    luajit
     cargo
-    gamemode
-    mangohud
-    gamescope
+    dart-sass
+
+    # Embedded
+    platformio
+    avrdude
+
+    # Language Servers & Libraries
+    pyright
+    libclang
+
+    # LaTeX & Mathematics
+    sage
+    sagetex
+    biber
+
+    # Editors
+    vim
+
+    # File Management
+    kdePackages.dolphin
+    kdePackages.ark
+    gvfs
+    xdg-utils
+    p7zip
+    unrar
+
+    # Documents & Office
+    libreoffice-fresh
+    zathura
+
+    # Media
     mpv
     vlc
     libvlc
     vlc-bittorrent
     f3d
-  ];
 
-  system.stateVersion = "25.11";
+    # Video Editing
+    kdePackages.kdenlive
+
+    # Graphics & Images
+    kdePackages.gwenview
+
+    # Game Development
+    godotPackages_4_6.godot
+
+    # Gaming
+    gamemode
+    mangohud
+    gamescope
+
+    # Wayland / Desktop
+    kitty
+    quickshell
+    hyprlock
+    hypridle
+    cliphist
+    wl-clipboard
+    grim
+    slurp
+    swappy
+    brightnessctl
+    matugen
+
+    # Qt
+    qt5.qtwayland
+    qt6.qtwayland
+
+    # Audio
+    wireplumber
+
+    # Networking
+    networkmanager
+    cloudflared
+    airtame
+
+    # Bluetooth
+    bluez
+    bluez-tools
+    bluetui
+
+    # Utilities
+    notsh
+    btop
+    fastfetch
+    afetch
+    polkit
+    power-profiles-daemon
+    vulkan-tools
+    libgtop
+    jemalloc
+    appimage-run
+
+    # Shell
+    zsh
+
+    # Fonts, Themes & Icons
+    nerd-fonts.jetbrains-mono
+    papirus-icon-theme
+    rose-pine-cursor
+
+    # Spell Checking
+    hunspell
+    hunspellDicts.da_DK
+    aspell
+    aspellDicts.da
+
+    # Secrets
+    inputs.agenix.packages."${pkgs.stdenv.hostPlatform.system}".default
+  ];
+  system.stateVersion = "26.05";
 }

@@ -7,7 +7,7 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     agenix = {
       url = "github:ryantm/agenix";
@@ -19,6 +19,11 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
+    notsh = {
+      url = "git+https://codeberg.org/Poellebob/notsh.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     playit = {
       url = "github:pedorich-n/playit-nixos-module";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -26,14 +31,14 @@
 
     dolphin-overlay = {
       url = "github:rumboon/dolphin-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
+
     millennium = {
       url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
