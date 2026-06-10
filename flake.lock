@@ -400,11 +400,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774293042,
-        "narHash": "sha256-OEBV+Y5I4Ldu98k0KvGXRfJYh+jjE8ocCSL/dxTGs1s=",
+        "lastModified": 1780679734,
+        "narHash": "sha256-KmRNvpNOb7QEORa06bVgjW9kITcx0VhsI7w0vhmZyD8=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "bc357c75e3142a31b849ba49c5299fb52c61cf59",
+        "rev": "b2b7db486e06e098711dc291bb25db82850e1d16",
         "type": "github"
       },
       "original": {
@@ -594,11 +594,11 @@
         "stylix": "stylix"
       },
       "locked": {
-        "lastModified": 1774868368,
-        "narHash": "sha256-PFO/VgcV6ZOzEZ0FKiZeAtvLLMU9J75/BrwHO8zaUCo=",
+        "lastModified": 1781115483,
+        "narHash": "sha256-mjx8d6fp1ENRHzu9713Gozd5doolj4ynAX2Pqi09t0c=",
         "ref": "refs/heads/devil",
-        "rev": "12e14851956d1c3199f4edfd770ecbcf13247c9b",
-        "revCount": 212,
+        "rev": "413aa5a52fc6d4348071e8008a6e6003e1e6435e",
+        "revCount": 252,
         "type": "git",
         "url": "file:./minima"
       },
@@ -703,11 +703,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1777268161,
-        "narHash": "sha256-bxrdOn8SCOv8tN4JbTF/TXq7kjo9ag4M+C8yzzIRYbE=",
+        "lastModified": 1774106199,
+        "narHash": "sha256-US5Tda2sKmjrg2lNHQL3jRQ6p96cgfWh3J1QBliQ8Ws=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1c3fe55ad329cbcb28471bb30f05c9827f724c76",
+        "rev": "6c9a78c09ff4d6c21d0319114873508a6ec01655",
         "type": "github"
       },
       "original": {
@@ -931,15 +931,15 @@
         "scroll-stable": "scroll-stable"
       },
       "locked": {
-        "lastModified": 1774127640,
-        "narHash": "sha256-BcFF02wr3l7ek7W7EOTdbFzS7bTev46st483zw2+U0Y=",
-        "owner": "AsahiRocks",
+        "lastModified": 1780799536,
+        "narHash": "sha256-X6DN3V4limF85rvRSlo7LWKaBR4rhpNhOExC22BmZ+8=",
+        "owner": "Diax170",
         "repo": "scroll-flake",
-        "rev": "432b77dc8aa815a5846e9545eff2ea3079a02f87",
+        "rev": "a60002e39401172eb558e05c0408301ff616382a",
         "type": "github"
       },
       "original": {
-        "owner": "AsahiRocks",
+        "owner": "Diax170",
         "repo": "scroll-flake",
         "type": "github"
       }
@@ -947,11 +947,11 @@
     "scroll-git": {
       "flake": false,
       "locked": {
-        "lastModified": 1773502109,
-        "narHash": "sha256-0+0KQ6+g497bJd0Bhdd4/fOamBM8Cw27iSSJD9bKvio=",
+        "lastModified": 1780748929,
+        "narHash": "sha256-IzpUd1ABf4c87Iz6Y37gW/ip7/SDBnEt42cP+cBHYVk=",
         "ref": "master",
-        "rev": "d79ffd2304b80bc66545bd3b691b29578ea6b9a6",
-        "revCount": 8216,
+        "rev": "4d44264ac480bc25daeb8938ec536cde9f695ec9",
+        "revCount": 8435,
         "type": "git",
         "url": "https://github.com/dawsers/scroll"
       },
@@ -964,16 +964,16 @@
     "scroll-stable": {
       "flake": false,
       "locked": {
-        "lastModified": 1771347627,
-        "narHash": "sha256-fhNC5i9ZHvXWKQY+zDRHr7QovmquU0eLI8/QY3euBnc=",
-        "ref": "refs/tags/1.12.5",
-        "rev": "f265ef29ef3752299f2ef19c154ef1b908515914",
-        "revCount": 8164,
+        "lastModified": 1779743761,
+        "narHash": "sha256-NbeQO+iVgpzD/R9TBhqG9T0eS/Hpn5FVqCg+upS5cSQ=",
+        "ref": "refs/tags/1.12.15",
+        "rev": "03cc80e83294913b7289dcc6607a406a2a5c67ac",
+        "revCount": 8420,
         "type": "git",
         "url": "https://github.com/dawsers/scroll"
       },
       "original": {
-        "ref": "refs/tags/1.12.5",
+        "ref": "refs/tags/1.12.15",
         "type": "git",
         "url": "https://github.com/dawsers/scroll"
       }
