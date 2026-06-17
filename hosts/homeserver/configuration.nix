@@ -116,8 +116,9 @@ in
     serviceConfig = {
       Type = "simple";
       User = "games";
-      WorkingDirectory = "/home/games/StarT-Eta-2-Hf-1";
-      ExecStart = "${pkgs.jdk17_headless}/bin/java @user_jvm_args.txt @libraries/net/minecraftforge/forge/1.20.1-47.4.0/unix_args.txt \"$@\"";
+      WorkingDirectory = "/home/games/StarT-Theta-1-Hf-3";
+      ExecStart = "${pkgs.jdk17_headless}/bin/java @user_jvm_args.txt @libraries/net/minecraftforge/forge/1.20.1-47.4.20/unix_args.txt --nogui \"$@\"";
+
       Restart = "on-failure";
       RestartSec = "10s";
       
@@ -158,5 +159,5 @@ in
     steamcmd
   ];
   
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 }

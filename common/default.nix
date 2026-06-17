@@ -38,7 +38,9 @@
       jackett = prev.jackett.overrideAttrs (old: {
         doCheck = false;
       });
-      zen-browser = inputs.zen-browser.packages.${prev.stdenv.hostPlatform.system}.default;
+      zen-browser = inputs.zen-browser.packages.${prev.stdenv.hostPlatform.system}.beta;#.override {
+      #  nativeMessagingHosts = [pkgs.firefoxpwa];
+      #};
       kdePackages = prev.kdePackages.overrideScope (kfinal: kprev: {
         dolphin = prev.symlinkJoin {
           name = "dolphin-wrapped";
