@@ -58,6 +58,8 @@
       spotify
       discord
       obs-studio
+      dwarf-fortress-packages.phoebus-theme
+      dwarf-fortress 
     ];
   };
 
@@ -72,6 +74,18 @@
       ];
 
       nixpkgs.config.allowUnfree = true;
+
+      xdg.desktopEntries.dwarf-fortress = {
+        name = "Dwarf Fortress";
+        comment = "Losing is fun";
+        exec = "dwarf-fortress";
+        icon = "${pkgs.fetchurl {
+          url = "https://cdn2.steamgriddb.com/icon/040ca38cefb1d9226d79c05dd25469cb/32/256x256.png";
+          hash = "sha256-LQtGJfgjG81Hp4/TnrqrFns9aNhY0hLEhq5iB6FCKEc=";
+        }}";
+        categories = [ "Game" ];
+        terminal = false;
+      };
 
       programs.zen-browser.profiles.default.search = {
         force = true;
