@@ -8,4 +8,5 @@ in
   "playit-secret.age".publicKeys = [ goonbox homeserver ];
   "windrose-env.age".publicKeys = [ goonbox homeserver ];
   "searxng.age".publicKeys = [ goonbox framework13 ];
+  "cemu-keys.age".publicKeys = [ goonbox framework13 ];
 }

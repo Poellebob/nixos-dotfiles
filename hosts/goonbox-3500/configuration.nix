@@ -179,7 +179,6 @@ in
       importOXRRuntimes = true;
       package = config.programs.steam.package;
     };
-    defaultRuntime = true;
     autoStart = true;
     package = wivrnpkg;
   };
