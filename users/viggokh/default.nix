@@ -54,6 +54,7 @@
     packages = with pkgs; [
       thunderbird
       vscodium
+      zed-editor
       opencode
       obsidian
       ungoogled-chromium
