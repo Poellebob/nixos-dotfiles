@@ -170,6 +170,7 @@
 
   environment.systemPackages = with pkgs; [
     # Development
+    godotPackages_4_6.godot
     devenv
     gnumake
     git
@@ -183,28 +184,22 @@
     zoxide
     cachix
 
-    # Languages & Toolchains
     python3
     lua
     luajit
     cargo
-    dart-sass
+    dart-sass 
 
-    # Embedded
-    platformio
-    avrdude
-
-    # Language Servers & Libraries
     pyright
     libclang
 
-    # LaTeX & Mathematics
+    platformio
+    avrdude
+
+    # LaTeX
     sage
     sagetex
     biber
-
-    # Editors
-    vim
 
     # File Management
     kdePackages.dolphin
@@ -224,33 +219,22 @@
     libvlc
     vlc-bittorrent
     f3d
-
-    # Video Editing
     kdePackages.kdenlive
-
-    # Graphics & Images
     kdePackages.gwenview
-
-    # Game Development
-    godotPackages_4_6.godot
 
     # Gaming
     gamemode
     mangohud
     gamescope
 
-    # Wayland / Desktop
+    # Desktop
     kitty
     quickshell
     hyprlock
     hypridle
     cliphist
     wl-clipboard
-    grim
-    slurp
-    swappy
     brightnessctl
-    matugen
 
     # Qt
     qt5.qtwayland
