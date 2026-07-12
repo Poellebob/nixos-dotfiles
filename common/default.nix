@@ -189,6 +189,7 @@
     biber
 
     # File Management
+    gparted
     kdePackages.dolphin
     kdePackages.ark
     gvfs
