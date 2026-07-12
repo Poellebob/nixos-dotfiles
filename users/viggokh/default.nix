@@ -150,6 +150,7 @@
         autostart = [
           "${pkgs.spotify}/bin/spotify --disable-gpu"
           "${pkgs.vesktop}/bin/vesktop --disable-gpu"
+          "${pkgs.kdePackages.kdeconnect-kde}/kdeconnect/kdeconnectd"
           "steam -silent"
         ];
 

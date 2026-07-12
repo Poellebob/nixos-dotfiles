@@ -127,6 +127,25 @@ in
     };
   };
 
+  systemd.services.dillergej-server = {
+    description = "Minecraft Server";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    
+    serviceConfig = {
+      Type = "simple";
+      User = "games";
+      WorkingDirectory = "/home/games/dillergej";
+      ExecStart = "${pkgs.jdk25_headless}/bin/java -Xmx6G -jar /home/games/dillergej/server.jar --nogui";
+
+      Restart = "on-failure";
+      RestartSec = "10s";
+      
+      NoNewPrivileges = true;
+      PrivateTmp = true;
+    };
+  };
+
   virtualisation.oci-containers = {
     backend = "docker";
     containers.windrose = {
