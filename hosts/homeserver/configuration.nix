@@ -6,6 +6,7 @@ let
   adminkeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMWCNTxuiA6s9K3FJRWej12dj6v4GsxbtF0qiy41LEY6 viggokh@goonbox-3000"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKWKHcHhycQEuelo+0G6a51NLHY0QiLW/s40xMsxErOx viggokh@framework13"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID8jMemi3PwkC9V8AZYf3hYGdozFcAuQ/OaTfVFA+HUv u0_a421@localhost"
   ];
 in
 {

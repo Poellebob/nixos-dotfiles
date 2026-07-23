@@ -42,7 +42,6 @@
         nativeMessagingHosts = [pkgs.firefoxpwa-unwrapped];
       };
     })
-    inputs.millennium.overlays.default
     inputs.notsh.overlays.default
   ];
 
@@ -148,9 +147,7 @@
 
   programs.steam = {
     enable = true;
-    package = pkgs.millennium-steam.override {
-      extraArgs = "-console";
-    };
+    package = pkgs.steam;
   };
   hardware.steam-hardware.enable = true;
   programs.kdeconnect.enable = true;
