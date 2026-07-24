@@ -84,6 +84,9 @@
       home.sessionVariables = {
         EDITOR = "nvim";
       };
+      home.shellAliases = {
+        oc = "opencode";
+      };
 
       nixpkgs.config.allowUnfree = true;
 
