@@ -35,6 +35,9 @@ in
 
   age = { 
     identityPaths = [ "/home/viggokh/.ssh/id_ed25519" ];
+    secrets.goonbox-playit = {
+      file = ../../secrets/goonbox-playit.age;
+    };
   };
 
   minima = {
@@ -181,6 +184,11 @@ in
     };
     autoStart = true;
     package = wivrnpkg;
+  };
+
+  services.playit = {
+    enable = true;
+    secretPath = config.age.secrets.goonbox-playit.path;
   };
 
   fileSystems."/home/viggokh/storage" = {

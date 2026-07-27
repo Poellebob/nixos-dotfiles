@@ -69,6 +69,7 @@
       system = "x86_64-linux";
       modules = [
         agenix.nixosModules.default
+        playit.nixosModules.default
         home-manager.nixosModules.home-manager
         ./hosts/goonbox-3500/configuration.nix
         {

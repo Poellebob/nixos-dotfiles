@@ -9,4 +9,5 @@ in
   "windrose-env.age".publicKeys = [ goonbox homeserver ];
   "searxng.age".publicKeys = [ goonbox framework13 ];
   "cemu-keys.age".publicKeys = [ goonbox framework13 ];
+  "goonbox-playit.age".publicKeys = [ goonbox ];
 }

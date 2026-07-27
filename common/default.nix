@@ -130,6 +130,8 @@
     libraries = with pkgs; [];
   };
 
+  services.gnome.gnome-keyring.enable = true;
+
   systemd.services.flatpak-repo = {
     wantedBy = [ "multi-user.target" ];
     path = [ pkgs.flatpak ];
@@ -250,6 +252,8 @@
     jemalloc
     appimage-run
     firefoxpwa-unwrapped
+    zen-browser
+    qutebrowser
 
     # Shell
     zsh
