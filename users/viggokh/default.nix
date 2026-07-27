@@ -5,6 +5,12 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      qutebrowser = prev.qutebrowser.override { enableWideVine = true; };
+    })
+  ];
+
   programs.zsh.enable = true;
   
   age.secrets = {
@@ -143,6 +149,11 @@
 
         shell.enable = true;
         theming.enable = true;
+
+        programs.browser = {
+          name = "qutebrowser";
+          package = pkgs.qutebrowser;
+        };
 
         minimaConfig = {
           darkTheme = true;
