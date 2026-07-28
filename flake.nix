@@ -53,7 +53,7 @@
     sagetex-py.url = "github:poellebob/sagetex-py-flake";
     blender-cuda.url = "github:adithyagenie/blender-cuda-nixos";
     minima = {
-      url = "git+file:./minima";
+      url = "github:Poellebob/minima-shell/devil";
       #inputs.nixpkgs.follows = "nixpkgs";
     };
 
