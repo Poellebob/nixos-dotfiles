@@ -610,17 +610,18 @@
         "stylix": "stylix"
       },
       "locked": {
-        "lastModified": 1781115483,
-        "narHash": "sha256-mjx8d6fp1ENRHzu9713Gozd5doolj4ynAX2Pqi09t0c=",
-        "ref": "refs/heads/devil",
-        "rev": "413aa5a52fc6d4348071e8008a6e6003e1e6435e",
-        "revCount": 252,
-        "type": "git",
-        "url": "file:./minima"
+        "lastModified": 1785273106,
+        "narHash": "sha256-Om7brSH9KonlPDH29y6DxdN6T9jGHdMT/w29tYc4am4=",
+        "owner": "Poellebob",
+        "repo": "minima-shell",
+        "rev": "2a68593a463182f31ac805024d2dc368a4b1eb65",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:./minima"
+        "owner": "Poellebob",
+        "ref": "devil",
+        "repo": "minima-shell",
+        "type": "github"
       }
     },
     "minizip-src": {
