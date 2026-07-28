@@ -94,6 +94,13 @@
         oc = "opencode";
       };
 
+      programs.tmux = {
+        enable = true;
+        shell = "${pkgs.zsh}/bin/zsh";
+        clock24 = true;
+        mouse = true;
+      };
+
       nixpkgs.config.allowUnfree = true;
 
       xdg.desktopEntries.dwarf-fortress = {
@@ -107,6 +114,11 @@
         categories = [ "Game" ];
         terminal = false;
       };
+
+      xdg.mimeApps.defaultApplications = {
+        
+      };
+
       home.file.".config/Cemu/keys.txt".source = config.lib.file.mkOutOfStoreSymlink 
         nixosConfig.age.secrets.cemu-keys.path;
 
