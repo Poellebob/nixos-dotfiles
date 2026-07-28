@@ -162,10 +162,6 @@
         shell.enable = true;
         theming.enable = true;
 
-        programs.browser = {
-          name = "qutebrowser";
-          package = pkgs.qutebrowser;
-        };
 
         minimaConfig = {
           darkTheme = true;
