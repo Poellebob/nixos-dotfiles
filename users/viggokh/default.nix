@@ -128,28 +128,28 @@
         engines = {
           searxng = {
             name = "SearXNG";
-            urls = [{ template = "http://127.0.0.1:8888/search?q={searchTerms}"; }];
+            urls = [{ template = "http://127.0.0.1:8888/search?q=%s"; }];
             definedAliases = [ "@s" ];
           };
           google = {
             name = "Google";
-            urls = [{ template = "https://www.google.com/search?q={searchTerms}"; }];
+            urls = [{ template = "https://www.google.com/search?q=%s"; }];
             definedAliases = [ "@g" ];
           };
           github = {
             name = "GitHub";
-            urls = [{ template = "https://github.com/search?q={searchTerms}"; }];
+            urls = [{ template = "https://github.com/search?q=%s"; }];
             definedAliases = [ "@gh" ];
           };
           nixpkgs = {
             name = "Nixpkgs";
-            urls = [{ template = "https://search.nixos.org/packages?query={searchTerms}"; }];
+            urls = [{ template = "https://search.nixos.org/packages?query=%s"; }];
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
             definedAliases = [ "@np" ];
           };
           mynixos = {
             name = "My NixOS";
-            urls = [{ template = "https://mynixos.com/search?q={searchTerms}"; }];
+            urls = [{ template = "https://mynixos.com/search?q=%s"; }];
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
             definedAliases = [ "@nx" ];
           };

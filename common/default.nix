@@ -169,6 +169,8 @@
     fzf
     zoxide
     cachix
+    
+    packwiz
 
     python3
     lua
@@ -191,6 +193,11 @@
     gparted
     kdePackages.dolphin
     kdePackages.ark
+    kdePackages.kio-gdrive
+    kdePackages.kio 
+    kdePackages.kio-fuse 
+    kdePackages.kio-admin 
+    kdePackages.kio-extras 
     gvfs
     xdg-utils
     p7zip
@@ -222,6 +229,7 @@
     cliphist
     wl-clipboard
     brightnessctl
+    wineWow64Packages.full
 
     # Qt
     qt5.qtwayland
