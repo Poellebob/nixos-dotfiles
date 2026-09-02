@@ -184,24 +184,6 @@
         "type": "github"
       }
     },
-    "dolphin-overlay": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_2"
-      },
-      "locked": {
-        "lastModified": 1775943689,
-        "narHash": "sha256-0XBCoR1L5gYmh8VqZu0HcHsL4GeGXQMC0f3ARshf/rk=",
-        "owner": "rumboon",
-        "repo": "dolphin-overlay",
-        "rev": "c32758737a0cb02d0bf380753d11df1b8537a944",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rumboon",
-        "repo": "dolphin-overlay",
-        "type": "github"
-      }
-    },
     "firefox-gnome-theme": {
       "flake": false,
       "locked": {
@@ -529,7 +511,7 @@
         "minhook-src": "minhook-src",
         "mini-src": "mini-src",
         "minizip-src": "minizip-src",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "re2-src": "re2-src",
         "websocketpp-src": "websocketpp-src",
         "zlib-src": "zlib-src"
@@ -604,22 +586,22 @@
     "minima": {
       "inputs": {
         "home-manager": "home-manager_3",
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_3",
         "nixvim": "nixvim",
         "scroll-flake": "scroll-flake",
         "stylix": "stylix"
       },
       "locked": {
-        "lastModified": 1788347278,
-        "narHash": "sha256-fN1G1vgyKttkAS4hfzEaPwYVNYeXQn60UkTjR6QoiyM=",
+        "lastModified": 1788353654,
+        "narHash": "sha256-BZ/U83RHpKU/nPZsef6zZsX0ICmIhK/vWMirh2z7nBU=",
         "owner": "Poellebob",
         "repo": "minima-shell",
-        "rev": "6be1b648ac468a99480ac4b694111d3309fe89c2",
+        "rev": "d711b3b9b9d86dd37bbf5770a31edbdfe44d2ef5",
         "type": "github"
       },
       "original": {
         "owner": "Poellebob",
-        "ref": "devil",
+        "ref": "devel/master",
         "repo": "minima-shell",
         "type": "github"
       }
@@ -711,21 +693,6 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1743890059,
-        "narHash": "sha256-QQLhHHGNtAW8qRpseb40zqZlhZUeRRUg2SGmXjfE+so=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "58a813438464b5295170efe38d8bd5f40fcc1d23",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
         "lastModified": 1770115704,
         "narHash": "sha256-KHFT9UWOF2yRPlAnSXQJh6uVcgNcWlFqqiAZ7OVlHNc=",
         "owner": "nixos",
@@ -740,7 +707,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1788039129,
         "narHash": "sha256-pa4Q0qErvCvzCaaUph7Sm37RhR4xvPrYI8Lgz6k85+A=",
@@ -756,7 +723,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1787631388,
         "narHash": "sha256-vMiXptXarfSdJb1Gkc+FYVOAibuBRj7qxGa8z68q1Uw=",
@@ -772,7 +739,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_6": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1780453794,
         "narHash": "sha256-bXMRa9VTsHSPXL4Cw8R6JJLQeY3Y/IP4+YJCYVmQ7FY=",
@@ -788,7 +755,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_7": {
+    "nixpkgs_6": {
       "locked": {
         "lastModified": 1775811116,
         "narHash": "sha256-t+HZK42pB6N+i5RGbuy7Xluez/VvWbembBdvzsc23Ss=",
@@ -807,7 +774,7 @@
     "nixvim": {
       "inputs": {
         "flake-parts": "flake-parts_2",
-        "nixpkgs": "nixpkgs_5",
+        "nixpkgs": "nixpkgs_4",
         "systems": "systems_3"
       },
       "locked": {
@@ -931,12 +898,11 @@
       "inputs": {
         "agenix": "agenix",
         "blender-cuda": "blender-cuda",
-        "dolphin-overlay": "dolphin-overlay",
         "home-manager": "home-manager_2",
         "millennium": "millennium",
         "minima": "minima",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs_6",
+        "nixpkgs": "nixpkgs_5",
         "notsh": "notsh",
         "playit": "playit",
         "sagetex-py": "sagetex-py",
@@ -945,7 +911,7 @@
     },
     "sagetex-py": {
       "inputs": {
-        "nixpkgs": "nixpkgs_7"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1775933118,
