@@ -108,9 +108,20 @@ in
     enable = true;
     libraries = with pkgs; [];
   };
+
+  networking.firewall.allowedTCPPorts = [ 9090 ];
+
+  services.cockpit = {
+    enable = true;
+    port = 9090;
+    openFirewall = true;
+    plugins = with pkgs; [
+      cockpit-podman
+    ];
+  };
   
   systemd.services.minecraft-server = {
-    description = "Minecraft Server";
+    description = "Minecraft Server: Star Tech";
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
     
@@ -129,7 +140,7 @@ in
   };
 
   systemd.services.dillergej-server = {
-    description = "Minecraft Server";
+    description = "Minecraft Server: dillergøj";
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
     
@@ -150,6 +161,7 @@ in
   virtualisation.oci-containers = {
     backend = "docker";
     containers.windrose = {
+      #description = "Windrose server";
       image = "indifferentbroccoli/windrose-server-docker";
       autoStart = true;
       volumes = [
