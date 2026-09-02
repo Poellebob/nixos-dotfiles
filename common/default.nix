@@ -102,21 +102,20 @@
       enable = true;
       layout = "hy3";
     };
-    #sway = {
-    #  enable = true;
-    #  fx = true;
-    #};
-
-    programs = {
-      fileManager = {
-        name = "dolphin";
-        package = pkgs.kdePackages.dolphin;
-      };
-      browser = {
-        name = "zen-beta";
-        package = pkgs.zen-browser;
-      };
-    };
+    keybinds = [
+      {
+        exec = "${pkgs.kitty}/bin/kitty";
+        bind = [ "mainMod" "Return" ];
+      }
+      {
+        exec = "${pkgs.zen-browser}/bin/zen-beta";
+        bind = [ "mainMod" "B" ];
+      }
+      {
+        exec = "${pkgs.kdePackages.dolphin}/bin/dolphin";
+        bind = [ "mainMod" "E" ];
+      }
+    ];
   };
 
   programs.direnv = {
@@ -185,7 +184,7 @@
     fzf
     zoxide
     cachix
-    
+
     packwiz
     dbus
 
@@ -214,10 +213,10 @@
     kdePackages.dolphin
     kdePackages.ark
     kdePackages.kio-gdrive
-    kdePackages.kio 
-    kdePackages.kio-fuse 
-    kdePackages.kio-admin 
-    kdePackages.kio-extras 
+    kdePackages.kio
+    kdePackages.kio-fuse
+    kdePackages.kio-admin
+    kdePackages.kio-extras
     gvfs
     xdg-utils
     p7zip

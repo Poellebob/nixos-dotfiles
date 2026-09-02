@@ -84,13 +84,23 @@
 
   home-manager = {
     useUserPackages = true;
-    extraSpecialArgs = { inherit minima inputs; nixosConfig = config; };
-    users.viggokh = { config, pkgs, nixosConfig, ... }: {
-      home.stateVersion = "26.05";
-      imports = [ 
-        minima.homeModules.default 
-        inputs.zen-browser.homeModules.default
-      ];
+    extraSpecialArgs = {
+      inherit minima inputs;
+      nixosConfig = config;
+    };
+    users.viggokh =
+      {
+        config,
+        pkgs,
+        nixosConfig,
+        ...
+      }:
+      {
+        home.stateVersion = "26.05";
+        imports = [
+          minima.homeModules.default
+          inputs.zen-browser.homeModules.default
+        ];
 
         home.sessionVariables = {
           EDITOR = "nvim";
@@ -182,7 +192,7 @@
 
           specialWorkspaces = {
             discord = {
-              key = "m";
+              keybind = [ "mainMod" "m" ];
               rule = {
                 app_id = [
                   "discord"
@@ -195,15 +205,15 @@
               };
             };
             spotify = {
-              key = "s";
+              keybind = [ "mainMod" "s" ];
               rule.class = [ "Spotify" ];
             };
             obs = {
-              key = "o";
+              keybind = [ "mainMod" "o" ];
               rule.app_id = [ "obs-studio" ];
             };
             TV = {
-              key = "t";
+              keybind = [ "mainMod" "t" ];
               rule.app_id = [ "stremio" ];
               rule.class = [ "Stremio" ];
             };
@@ -213,14 +223,6 @@
             enable = true;
 
             lsp.servers = {
-              rust_analyzer = {
-                enable = true;
-                installCargo = false;
-                installRustc = false;
-              };
-              pyright.enable = true;
-              clangd.enable = true;
-              qmlls.enable = true;
               bashls.enable = true;
             };
 

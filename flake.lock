@@ -610,11 +610,11 @@
         "stylix": "stylix"
       },
       "locked": {
-        "lastModified": 1788337665,
-        "narHash": "sha256-dNKPfmyzuAP4HBfkaQqJ6EgB2ZjxVVOcK5rF/LXSjfE=",
+        "lastModified": 1788347278,
+        "narHash": "sha256-fN1G1vgyKttkAS4hfzEaPwYVNYeXQn60UkTjR6QoiyM=",
         "owner": "Poellebob",
         "repo": "minima-shell",
-        "rev": "2ade7f70bfcbfe22aa1cc5da4aa78188ce502e3d",
+        "rev": "6be1b648ac468a99480ac4b694111d3309fe89c2",
         "type": "github"
       },
       "original": {
