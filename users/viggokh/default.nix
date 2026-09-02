@@ -1,4 +1,11 @@
-{ config, pkgs, lib, minima, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  minima,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -12,7 +19,7 @@
   ];
 
   programs.zsh.enable = true;
-  
+
   age.secrets = {
     searxng-secret = {
       file = ../../secrets/searxng.age;
@@ -72,8 +79,6 @@
       vesktop
       obs-studio
       cemu
-      dwarf-fortress 
-      dwarf-fortress-packages.cla-theme
     ];
   };
 
@@ -87,184 +92,190 @@
         inputs.zen-browser.homeModules.default
       ];
 
-      home.sessionVariables = {
-        EDITOR = "nvim";
-      };
-      home.shellAliases = {
-        oc = "opencode";
-      };
-
-      programs.tmux = {
-        enable = true;
-        shell = "${pkgs.zsh}/bin/zsh";
-        clock24 = true;
-        mouse = true;
-      };
-
-      nixpkgs.config.allowUnfree = true;
-
-      xdg.desktopEntries.dwarf-fortress = {
-        name = "Dwarf Fortress";
-        comment = "Losing is fun";
-        exec = "dwarf-fortress";
-        icon = "${pkgs.fetchurl {
-          url = "https://cdn2.steamgriddb.com/icon/040ca38cefb1d9226d79c05dd25469cb/32/256x256.png";
-          hash = "sha256-LQtGJfgjG81Hp4/TnrqrFns9aNhY0hLEhq5iB6FCKEc=";
-        }}";
-        categories = [ "Game" ];
-        terminal = false;
-      };
-
-      xdg.mimeApps.defaultApplications = {
-        
-      };
-
-      home.file.".config/Cemu/keys.txt".source = config.lib.file.mkOutOfStoreSymlink 
-        nixosConfig.age.secrets.cemu-keys.path;
-
-      programs.zen-browser.profiles.default.search = {
-        force = true;
-        default = "searxng";
-        engines = {
-          searxng = {
-            name = "SearXNG";
-            urls = [{ template = "http://127.0.0.1:8888/search?q=%s"; }];
-            definedAliases = [ "@s" ];
-          };
-          google = {
-            name = "Google";
-            urls = [{ template = "https://www.google.com/search?q=%s"; }];
-            definedAliases = [ "@g" ];
-          };
-          github = {
-            name = "GitHub";
-            urls = [{ template = "https://github.com/search?q=%s"; }];
-            definedAliases = [ "@gh" ];
-          };
-          nixpkgs = {
-            name = "Nixpkgs";
-            urls = [{ template = "https://search.nixos.org/packages?query=%s"; }];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            definedAliases = [ "@np" ];
-          };
-          mynixos = {
-            name = "My NixOS";
-            urls = [{ template = "https://mynixos.com/search?q=%s"; }];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            definedAliases = [ "@nx" ];
-          };
+        home.sessionVariables = {
+          EDITOR = "nvim";
         };
-      };
-
-      minima = {
-        enable = true;
-
-        shell.enable = true;
-        theming.enable = true;
-
-
-        minimaConfig = {
-          darkTheme = true;
-          wallpaper.engineEnabled = true;
-          panel.alwaysVisible = true;
+        home.shellAliases = {
+          oc = "opencode";
         };
 
-        autostart = [
-          "${pkgs.spotify}/bin/spotify --disable-gpu"
-          "${pkgs.vesktop}/bin/vesktop --disable-gpu"
-          "${pkgs.kdePackages.kdeconnect-kde}/kdeconnect/kdeconnectd"
-          "steam -silent"
-        ];
+        programs.tmux = {
+          enable = true;
+          shell = "${pkgs.zsh}/bin/zsh";
+          clock24 = true;
+          mouse = true;
+        };
 
-        specialWorkspaces = {
-          discord = {
-            key = "m";
-            rule = {
-              app_id = [
-                "discord"
-                "vesktop"
-              ];
-              class = [
-                "discord"
-                "vesktop"
-              ];
+        nixpkgs.config.allowUnfree = true;
+
+        xdg.desktopEntries.dwarf-fortress = {
+          name = "Dwarf Fortress";
+          comment = "Losing is fun";
+          exec = "dwarf-fortress";
+          icon = "${pkgs.fetchurl {
+            url = "https://cdn2.steamgriddb.com/icon/040ca38cefb1d9226d79c05dd25469cb/32/256x256.png";
+            hash = "sha256-LQtGJfgjG81Hp4/TnrqrFns9aNhY0hLEhq5iB6FCKEc=";
+          }}";
+          categories = [ "Game" ];
+          terminal = false;
+        };
+
+        xdg.mimeApps.defaultApplications = {
+
+        };
+
+        home.file.".config/Cemu/keys.txt".source =
+          config.lib.file.mkOutOfStoreSymlink nixosConfig.age.secrets.cemu-keys.path;
+
+        programs.zen-browser.profiles.default.search = {
+          force = true;
+          default = "searxng";
+          engines = {
+            searxng = {
+              name = "SearXNG";
+              urls = [ { template = "http://127.0.0.1:8888/search?q={searchTerms}"; } ];
+              definedAliases = [ "@s" ];
+            };
+            google = {
+              name = "Google";
+              urls = [ { template = "https://www.google.com/search?q={searchTerms}"; } ];
+              definedAliases = [ "@g" ];
+            };
+            github = {
+              name = "GitHub";
+              urls = [ { template = "https://github.com/search?q={searchTerms}"; } ];
+              definedAliases = [ "@gh" ];
+            };
+            nixpkgs = {
+              name = "Nixpkgs";
+              urls = [ { template = "https://search.nixos.org/packages?query={searchTerms}"; } ];
+              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = [ "@np" ];
+            };
+            mynixos = {
+              name = "My NixOS";
+              urls = [ { template = "https://mynixos.com/search?q={searchTerms}"; } ];
+              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = [ "@nx" ];
             };
           };
-          spotify = {
-            key = "s";
-            rule.class = ["Spotify"];
-          };
-          obs = {
-            key = "o";
-            rule.app_id = ["obs-studio"];
-          };
-          TV = {
-            key = "t";
-            rule.app_id = ["stremio" ];
-            rule.class = ["Stremio"];
-          };
         };
 
-
-        vim = {
+        minima = {
           enable = true;
 
-          lsp.servers = {
-            rust_analyzer = {
-              enable = true;
-              installCargo = false;
-              installRustc = false;
+          shell.enable = true;
+          theming.enable = true;
+
+          minimaConfig = {
+            darkTheme = true;
+            wallpaper.engineEnabled = true;
+            panel.alwaysVisible = true;
+          };
+
+          autostart = [
+            "${pkgs.spotify}/bin/spotify --disable-gpu"
+            "${pkgs.vesktop}/bin/vesktop --disable-gpu"
+            "${pkgs.kdePackages.kdeconnect-kde}/kdeconnect/kdeconnectd"
+            "steam -silent"
+          ];
+
+          specialWorkspaces = {
+            discord = {
+              key = "m";
+              rule = {
+                app_id = [
+                  "discord"
+                  "vesktop"
+                ];
+                class = [
+                  "discord"
+                  "vesktop"
+                ];
+              };
             };
-            pyright.enable = true;
-            clangd.enable = true;
-            qmlls.enable = true;
-            bashls.enable = true;
+            spotify = {
+              key = "s";
+              rule.class = [ "Spotify" ];
+            };
+            obs = {
+              key = "o";
+              rule.app_id = [ "obs-studio" ];
+            };
+            TV = {
+              key = "t";
+              rule.app_id = [ "stremio" ];
+              rule.class = [ "Stremio" ];
+            };
           };
 
-          lsp.formatter = {
-            rust = [ "rustfmt" ];
-            python = [ "black" ];
-            c = [ "clang-format" ];
-            cpp = [ "clang-format" ];
-            sh = [ "shfmt" ];
-            bash = [ "shfmt" ];
-            qml = [ "qmlfmt"  ];
-          };
+          vim = {
+            enable = true;
 
-          lsp.formatterOpts = {
-            qmlfmt.args = [
-              "--width" "80"
-              "--indent" "2"
+            lsp.servers = {
+              rust_analyzer = {
+                enable = true;
+                installCargo = false;
+                installRustc = false;
+              };
+              pyright.enable = true;
+              clangd.enable = true;
+              qmlls.enable = true;
+              bashls.enable = true;
+            };
+
+            keybinds = [
+              {
+                mode = "n";
+                key = "-p";
+                action = "<NOP>";
+                desc = "PlatformIO";
+              }
+              {
+                mode = "n";
+                key = "-pd";
+                action = "<cmd>!pio run -t compiledb<CR>";
+                desc = "Make pio compiledb";
+              }
+              {
+                mode = "n";
+                key = "-pu";
+                action = "<cmd>!pio run -t upload<CR>";
+                desc = "Upload pio project";
+              }
+              {
+                mode = "n";
+                key = "-pm";
+                action = "<cmd>!pio run<CR>";
+                desc = "Make pio project";
+              }
+              {
+                mode = "n";
+                key = "-pc";
+                action = "<cmd>!pio run -t clean<CR>";
+                desc = "Clean pio project";
+              }
+            ];
+
+            autocmd = [
+              {
+                event = "FileType";
+                pattern = [
+                  "rust"
+                  "python"
+                ];
+                command = "setlocal tabstop=4 shiftwidth=4 softtabstop=4";
+                desc = "4-space indent for rust and python";
+              }
+              {
+                event = "FileType";
+                pattern = "tex";
+                command = "setlocal spell spelllang=da,en";
+                desc = "Danish/English spell checking for LaTeX";
+              }
             ];
           };
-
-          plugins = {
-          };
-
-          keybinds = [
-            { mode = "n"; key = "-p";  action = "<NOP>"; desc = "PlatformIO"; }
-            { mode = "n"; key = "-pd"; action = "<cmd>!pio run -t compiledb<CR>"; desc = "Make pio compiledb"; }
-            { mode = "n"; key = "-pu"; action = "<cmd>!pio run -t upload<CR>"; desc = "Upload pio project"; }
-            { mode = "n"; key = "-pm"; action = "<cmd>!pio run<CR>"; desc = "Make pio project"; }
-            { mode = "n"; key = "-pc"; action = "<cmd>!pio run -t clean<CR>"; desc = "Clean pio project"; }
-          ];
-
-          autocmd = [
-            {
-              event = "FileType";
-              pattern = [ "rust" "python" ];
-              command = "setlocal tabstop=4 shiftwidth=4 softtabstop=4";
-              desc = "4-space indent for rust and python";
-            }
-            {
-              event = "FileType";
-              pattern = "tex";
-              command = "setlocal spell spelllang=da,en";
-              desc = "Danish/English spell checking for LaTeX";
-            }
-          ];
         };
       };
-    };
   };
 }

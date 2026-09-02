@@ -95,6 +95,7 @@
     platformio-core.udev
     openocd
     airtame
+    geteduroam
   ];
 
   console.keyMap = "dk-latin1";

@@ -1,4 +1,10 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -9,24 +15,25 @@
     enable = true;
     scheme = "scheme-full";
     packages = {
-      inherit (pkgs.texlive) 
-      dvisvgm 
-      dvipng 
-      wrapfig 
-      amsmath 
-      ulem 
-      hyperref 
-      capt-of 
-      enumitem 
-      float 
-      starray 
-      parskip 
-      booktabs 
-      xcolor 
-      listings 
-      geometry 
-      plantuml
-    ;};
+      inherit (pkgs.texlive)
+        dvisvgm
+        dvipng
+        wrapfig
+        amsmath
+        ulem
+        hyperref
+        capt-of
+        enumitem
+        float
+        starray
+        parskip
+        booktabs
+        xcolor
+        listings
+        geometry
+        plantuml
+        ;
+    };
     spell = [
       "en"
       "da"
@@ -39,7 +46,7 @@
         doCheck = false;
       });
       zen-browser = inputs.zen-browser.packages.${prev.stdenv.hostPlatform.system}.beta.override {
-        nativeMessagingHosts = [pkgs.firefoxpwa-unwrapped];
+        nativeMessagingHosts = [ pkgs.firefoxpwa-unwrapped ];
       };
     })
     inputs.notsh.overlays.default
@@ -51,7 +58,7 @@
     "nix-command"
     "flakes"
   ];
-  
+
   services.xserver.enable = true;
   services.displayManager.ly.enable = true;
 
@@ -91,8 +98,14 @@
 
   minima = {
     enable = true;
-    wm = "swayfx";
-    modifier = "Mod4";
+    hyprland = {
+      enable = true;
+      layout = "hy3";
+    };
+    #sway = {
+    #  enable = true;
+    #  fx = true;
+    #};
 
     programs = {
       fileManager = {
@@ -111,10 +124,10 @@
     nix-direnv.enable = true;
   };
 
-  environment.variables.TEXINPUTS =
-    ".:${pkgs.sagetex}/tex/latex/sagetex//:";
-  environment.variables.PYTHONPATH = 
-    "${inputs.sagetex-py.packages.${pkgs.stdenv.hostPlatform.system}.default}/lib/python/site-packages";
+  environment.variables.TEXINPUTS = ".:${pkgs.sagetex}/tex/latex/sagetex//:";
+  environment.variables.PYTHONPATH = "${
+    inputs.sagetex-py.packages.${pkgs.stdenv.hostPlatform.system}.default
+  }/lib/python/site-packages";
 
   fonts = {
     enableDefaultPackages = true;
@@ -124,10 +137,12 @@
       nerd-fonts.jetbrains-mono
     ];
   };
-  
+
   programs.nix-ld = {
     enable = true;
-    libraries = with pkgs; [];
+    libraries = with pkgs; [
+      dbus
+    ];
   };
 
   services.gnome.gnome-keyring.enable = true;
@@ -145,6 +160,7 @@
     flatpak.enable = true;
     upower.enable = true;
     fwupd.enable = true;
+    dbus.enable = true;
   };
 
   programs.steam = {
@@ -171,12 +187,16 @@
     cachix
     
     packwiz
+    dbus
 
-    python3
+    python313
+    gcc.cc.lib
+    clang
+    libclang
     lua
     luajit
     cargo
-    dart-sass 
+    dart-sass
 
     pyright
     libclang
