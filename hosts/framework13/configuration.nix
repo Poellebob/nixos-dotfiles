@@ -1,4 +1,10 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -11,20 +17,27 @@
     enable = true;
     displays = {
       eDP-1 = {
-        res      = "2256x1504";
-        position = { x = 0; y = 0; };
-        scale    = 1.6;
+        res = "2256x1504";
+        position = {
+          x = 0;
+          y = 0;
+        };
+        scale = 1.6;
         workspace = 1;
+        primary = true;
       };
       DP-3 = {
-        res      = "1920x1080";
-        position = { x = -1920; y = 0; };
-        scale    = 1.0;
+        res = "1920x1080";
+        position = {
+          x = -1920;
+          y = 0;
+        };
+        scale = 1.0;
       };
     };
   };
 
-  age = { 
+  age = {
     identityPaths = [ "/home/viggokh/.ssh/id_ed25519" ];
   };
 
@@ -70,10 +83,12 @@
     };
   };
 
-  swapDevices = [{
-    device = "/var/lib/swapfile";
-    size = 16 * 1024;
-  }];
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024;
+    }
+  ];
 
   programs.virt-manager.enable = true;
 
@@ -86,7 +101,7 @@
 
   services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.bluetooth.enable = true;
-  hardware.graphics = { 
+  hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };

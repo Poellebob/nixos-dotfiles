@@ -105,15 +105,24 @@
     keybinds = [
       {
         exec = "${pkgs.kitty}/bin/kitty";
-        bind = [ "mainMod" "Return" ];
+        bind = [
+          "mainMod"
+          "Return"
+        ];
       }
       {
         exec = "${pkgs.zen-browser}/bin/zen-beta";
-        bind = [ "mainMod" "B" ];
+        bind = [
+          "mainMod"
+          "B"
+        ];
       }
       {
         exec = "${pkgs.kdePackages.dolphin}/bin/dolphin";
-        bind = [ "mainMod" "E" ];
+        bind = [
+          "mainMod"
+          "E"
+        ];
       }
     ];
   };
@@ -166,6 +175,7 @@
     enable = true;
     package = pkgs.steam;
   };
+
   hardware.steam-hardware.enable = true;
   programs.kdeconnect.enable = true;
 

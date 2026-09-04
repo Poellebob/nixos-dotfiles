@@ -79,6 +79,7 @@
       vesktop
       obs-studio
       cemu
+      neovide
     ];
   };
 
@@ -186,13 +187,16 @@
           autostart = [
             "${pkgs.spotify}/bin/spotify --disable-gpu"
             "${pkgs.vesktop}/bin/vesktop --disable-gpu"
-            "${pkgs.kdePackages.kdeconnect-kde}/kdeconnect/kdeconnectd"
-            "steam -silent"
+            "${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnectd"
+            "${pkgs.steam}/bin/steam -silent"
           ];
 
           specialWorkspaces = {
             discord = {
-              keybind = [ "mainMod" "m" ];
+              keybind = [
+                "mainMod"
+                "m"
+              ];
               rule = {
                 app_id = [
                   "discord"
@@ -205,15 +209,24 @@
               };
             };
             spotify = {
-              keybind = [ "mainMod" "s" ];
+              keybind = [
+                "mainMod"
+                "s"
+              ];
               rule.class = [ "Spotify" ];
             };
             obs = {
-              keybind = [ "mainMod" "o" ];
+              keybind = [
+                "mainMod"
+                "o"
+              ];
               rule.app_id = [ "obs-studio" ];
             };
             TV = {
-              keybind = [ "mainMod" "t" ];
+              keybind = [
+                "mainMod"
+                "t"
+              ];
               rule.app_id = [ "stremio" ];
               rule.class = [ "Stremio" ];
             };
