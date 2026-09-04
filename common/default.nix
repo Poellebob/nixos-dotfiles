@@ -106,21 +106,21 @@
       {
         exec = "${pkgs.kitty}/bin/kitty";
         bind = [
-          "mainMod"
+          "Main"
           "Return"
         ];
       }
       {
         exec = "${pkgs.zen-browser}/bin/zen-beta";
         bind = [
-          "mainMod"
+          "Main"
           "B"
         ];
       }
       {
         exec = "${pkgs.kdePackages.dolphin}/bin/dolphin";
         bind = [
-          "mainMod"
+          "Main"
           "E"
         ];
       }

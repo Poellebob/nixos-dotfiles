@@ -110,7 +110,7 @@
           specialWorkspaces = {
             discord = {
               keybind = [
-                "mainMod"
+                "Main"
                 "m"
               ];
               rule = {
@@ -126,21 +126,21 @@
             };
             spotify = {
               keybind = [
-                "mainMod"
+                "Main"
                 "s"
               ];
               rule.class = [ "Spotify" ];
             };
             obs = {
               keybind = [
-                "mainMod"
+                "Main"
                 "o"
               ];
               rule.app_id = [ "obs-studio" ];
             };
             TV = {
               keybind = [
-                "mainMod"
+                "Main"
                 "t"
               ];
               rule.app_id = [ "stremio" ];
