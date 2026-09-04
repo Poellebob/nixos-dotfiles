@@ -102,6 +102,16 @@
         specialArgs = { inherit minima inputs; };
       };
 
+      nixosConfigurations.z4g4 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          agenix.nixosModules.default
+          home-manager.nixosModules.home-manager
+          ./hosts/z4g4/configuration.nix
+        ];
+        specialArgs = { inherit minima inputs; };
+      };
+
       nixosConfigurations.homeserver = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
