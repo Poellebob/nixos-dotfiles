@@ -1,4 +1,10 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 let
   wivrnpkg = (pkgs.wivrn.override { cudaSupport = true; });
@@ -28,12 +34,12 @@ in
           wrapProgram $out/bin/wayvr \
             --run 'export PRESSURE_VESSEL_FILESYSTEMS_RW="$XDG_RUNTIME_DIR/wivrn/comp_ipc"' \
             --run 'export PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1'
-        '';      
+        '';
       };
     })
   ];
 
-  age = { 
+  age = {
     identityPaths = [ "/home/viggokh/.ssh/id_ed25519" ];
     secrets.goonbox-playit = {
       file = ../../secrets/goonbox-playit.age;
@@ -44,15 +50,22 @@ in
     enableNvidia = true;
     displays = {
       DP-1 = {
-        res      = "1920x1080";
-        position = { x = 0; y = 0; };
-        scale    = 1.0;
+        res = "1920x1080";
+        position = {
+          x = 0;
+          y = 0;
+        };
+        scale = 1.0;
         workspace = 1;
+        primary = true;
       };
       HDMI-A-1 = {
-        res      = "1920x1080";
-        position = { x = -1920; y = 0; };
-        scale    = 1.0;
+        res = "1920x1080";
+        position = {
+          x = -1920;
+          y = 0;
+        };
+        scale = 1.0;
         workspace = "discord";
       };
     };
@@ -98,10 +111,12 @@ in
     };
   };
 
-  swapDevices = [{
-    device = "/var/lib/swapfile";
-    size = 16 * 1024;
-  }];
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024;
+    }
+  ];
 
   users.groups.libvirtd.members = [ "viggokh" ];
   users.extraGroups.docker.members = [ "viggokh" ];
@@ -114,7 +129,7 @@ in
     modesetting.enable = true;
     nvidiaSettings = true;
   };
-  hardware.graphics = { 
+  hardware.graphics = {
     enable = true;
     enable32Bit = true;
     extraPackages = with pkgs; [
@@ -137,8 +152,8 @@ in
     spiceUSBRedirection.enable = true;
     docker.enable = true;
   };
-  
-  programs.steam = { 
+
+  programs.steam = {
     extraCompatPackages = with pkgs; [
       nvidia-vaapi-driver
     ];
@@ -211,6 +226,6 @@ in
     podman
     podman-compose
     freerdp
-    dolphin-emu 
+    dolphin-emu
   ];
 }
