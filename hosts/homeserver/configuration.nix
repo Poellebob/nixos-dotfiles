@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   sshkeys = [
 
@@ -8,11 +13,18 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKWKHcHhycQEuelo+0G6a51NLHY0QiLW/s40xMsxErOx viggokh@framework13"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID8jMemi3PwkC9V8AZYf3hYGdozFcAuQ/OaTfVFA+HUv u0_a421@localhost"
   ];
+
+  ServerSidedModHash = "c7bfc2397e9d5151a6e7c42a8362d7fb329fcfe7";
+  serversided = pkgs.fetchPackwizModpack {
+    url = "https://raw.githubusercontent.com/SESG-HTX-LAN/server-modpack/${ServerSidedModHash}/pack.toml";
+    packHash = "sha256-LKRBDHmSQ/cvRM1BS9VQKw6yseGLijzgpCYmQdQsFVs=";
+    #dontVerifyIndexHash = true;
+  };
 in
 {
   age = {
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  
+
     secrets.playit-secret = {
       file = ../../secrets/playit-secret.age;
     };
@@ -62,11 +74,17 @@ in
 
   console.keyMap = "dk-latin1";
 
-  nix.settings.trusted-users = [ "root" "admin" ];
+  nix.settings.trusted-users = [
+    "root"
+    "admin"
+  ];
   users.users.admin = {
     isNormalUser = true;
     description = "admin";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     openssh.authorizedKeys.keys = adminkeys;
   };
 
@@ -106,7 +124,7 @@ in
 
   programs.nix-ld = {
     enable = true;
-    libraries = with pkgs; [];
+    libraries = with pkgs; [ ];
   };
 
   networking.firewall.allowedTCPPorts = [ 9090 ];
@@ -119,12 +137,48 @@ in
       cockpit-podman
     ];
   };
-  
+
+  services.minecraft-servers = {
+    enable = true;
+    eula = true;
+
+    user = "minecraft";
+    group = "minecraft";
+
+    managementSystem.tmux.enable = true;
+
+    servers.htx = {
+      enable = true;
+      autoStart = true;
+      openFirewall = true;
+      enableReload = true;
+
+      jvmOpts = "-Xms2G -Xmx20G";
+      serverProperties = {
+        server-port = 25565;
+        difficulty = "normal";
+        gamemode = "survival";
+        motd = "HTX Minecraft server! Installer simple voice chat for ingame proxi chat";
+        max-players = 20;
+        level-name = "world.2627";
+      };
+      package = pkgs.fabricServers.fabric-26_1_2.override {
+        jre_headless = pkgs.openjdk25_headless;
+      };
+      symlinks = {
+        mods = "${serversided}/mods";
+      };
+      files = {
+        config = "${serversided}/config";
+      };
+    };
+  };
+
   systemd.services.minecraft-server = {
     description = "Minecraft Server: Star Tech";
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
-    
+
     serviceConfig = {
       Type = "simple";
       User = "games";
@@ -133,7 +187,7 @@ in
 
       Restart = "on-failure";
       RestartSec = "10s";
-      
+
       NoNewPrivileges = true;
       PrivateTmp = true;
     };
@@ -143,7 +197,7 @@ in
     description = "Minecraft Server: dillergøj";
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
-    
+
     serviceConfig = {
       Type = "simple";
       User = "games";
@@ -152,7 +206,7 @@ in
 
       Restart = "on-failure";
       RestartSec = "10s";
-      
+
       NoNewPrivileges = true;
       PrivateTmp = true;
     };
@@ -179,7 +233,7 @@ in
       ];
     };
   };
-  
+
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     inputs.agenix.packages."${pkgs.stdenv.hostPlatform.system}".default
@@ -189,7 +243,8 @@ in
     kitty
     mcrcon
     steamcmd
+    tmux
   ];
-  
+
   system.stateVersion = "26.05";
 }

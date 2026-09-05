@@ -16,6 +16,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-minecraft = {
+      url = "github:Infinidoge/nix-minecraft";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # pterodactyl = {
     #   url = "git+https://codeberg.org/Poellebob/pterodactyl-flake.git";
     #   inputs.nixpkgs.follows = "nixpkgs";
