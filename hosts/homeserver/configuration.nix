@@ -44,6 +44,7 @@ in
 
   imports = [
     ./hardware-configuration.nix
+    ./oct.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -115,6 +116,11 @@ in
       "74af9739-e7ec-4489-9593-0a14e5351f72" = {
         credentialsFile = "${config.age.secrets.cloudflared-token.path}";
         default = "http_status:404";
+        ingress = {
+          "cseo261-3.oct.poellebob.xyz" = {
+            service = "http://localhost:8100";
+          };
+        };
       };
     };
   };
@@ -131,6 +137,8 @@ in
 
   networking.firewall.allowedTCPPorts = [ 9090 ];
 
+  virtualisation.oci-containers.backend = "docker";
+
   services.cockpit = {
     enable = true;
     port = 9090;
@@ -138,6 +146,13 @@ in
     plugins = with pkgs; [
       cockpit-podman
     ];
+  };
+
+  services.oct-server = {
+    enable = true;
+    port = 8100;
+    simpleLogin = true;
+    openFirewall = true; # if you want it reachable from outside the host
   };
 
   services.minecraft-servers = {
@@ -268,7 +283,6 @@ in
   };
 
   virtualisation.oci-containers = {
-    backend = "docker";
     containers.windrose = {
       #description = "Windrose server";
       image = "indifferentbroccoli/windrose-server-docker";
@@ -299,6 +313,7 @@ in
     mcrcon
     steamcmd
     tmux
+    cloudflared
   ];
 
   system.stateVersion = "26.05";
