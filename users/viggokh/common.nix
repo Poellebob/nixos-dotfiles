@@ -38,7 +38,6 @@
       thunderbird
       vscodium
       zed-editor
-      opencode
       obsidian
       ungoogled-chromium
       proton-vpn
@@ -88,6 +87,13 @@
         nixpkgs.config.allowUnfree = true;
 
         xdg.mimeApps.defaultApplications = { };
+
+        programs.opencode = {
+          enable = true;
+          agents = {
+            chat = ./opencode/chat.md;
+          };
+        };
 
         minima = {
           enable = true;

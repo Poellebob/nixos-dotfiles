@@ -10,6 +10,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     agenix = {
       url = "github:ryantm/agenix";
@@ -70,6 +71,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       home-manager,
       millennium,
       sagetex-py,
@@ -80,6 +82,11 @@
       nix-minecraft,
       ...
     }@inputs:
+    let
+      devenvUnstableOverlay = final: prev: {
+        devenv = nixpkgs-unstable.legacyPackages.${prev.system}.devenv;
+      };
+    in
     {
       nixosConfigurations.goonbox-3500 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -88,6 +95,7 @@
           playit.nixosModules.default
           home-manager.nixosModules.home-manager
           ./hosts/goonbox-3500/configuration.nix
+          { nixpkgs.overlays = [ devenvUnstableOverlay ]; }
           {
             nix.settings = {
               substituters = [ "https://adithyagenie.cachix.org" ];
@@ -104,6 +112,7 @@
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           ./hosts/framework13/configuration.nix
+          { nixpkgs.overlays = [ devenvUnstableOverlay ]; }
         ];
         specialArgs = { inherit minima inputs; };
       };
@@ -114,6 +123,7 @@
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           ./hosts/z4g4/configuration.nix
+          { nixpkgs.overlays = [ devenvUnstableOverlay ]; }
         ];
         specialArgs = { inherit minima inputs; };
       };
@@ -138,6 +148,7 @@
           nixos-wsl.nixosModules.default
           home-manager.nixosModules.home-manager
           ./hosts/wsl/configuration.nix
+          { nixpkgs.overlays = [ devenvUnstableOverlay ]; }
         ];
         specialArgs = { inherit minima inputs; };
       };

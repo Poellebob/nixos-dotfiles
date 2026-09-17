@@ -150,6 +150,7 @@
     enable = true;
     libraries = with pkgs; [
       dbus
+      coreutils
     ];
   };
 
@@ -281,7 +282,6 @@
     notsh
     btop
     fastfetch
-    afetch
     polkit
     power-profiles-daemon
     vulkan-tools
