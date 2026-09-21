@@ -201,6 +201,18 @@ in
     package = wivrnpkg;
   };
 
+  services.sunshine = {
+    enable = true;
+    openFirewall = true;
+    capSysAdmin = true;
+    package = pkgs.sunshine.override {
+      cudaSupport = true;
+    };
+    settings = {
+      encoder = "nvenc";
+    };
+  };
+
   services.playit = {
     enable = true;
     secretPath = config.age.secrets.goonbox-playit.path;
@@ -227,5 +239,6 @@ in
     podman-compose
     freerdp
     dolphin-emu
+    moonlight-qt
   ];
 }

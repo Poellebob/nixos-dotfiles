@@ -99,6 +99,14 @@
 
   networking.hostName = "framework13";
 
+  services.sunshine = {
+    enable = true;
+    openFirewall = true;
+    settings = {
+      encoder = "vaapi";
+    };
+  };
+
   services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.bluetooth.enable = true;
   hardware.graphics = {
