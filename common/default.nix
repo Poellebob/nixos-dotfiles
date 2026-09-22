@@ -151,6 +151,10 @@
     libraries = with pkgs; [
       dbus
       coreutils
+      gcc
+      gcc.cc.lib
+      clang
+      libclang
     ];
   };
 
@@ -200,6 +204,7 @@
     dbus
 
     python313
+    gcc
     gcc.cc.lib
     clang
     libclang
