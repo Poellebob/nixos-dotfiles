@@ -103,31 +103,56 @@ in
     };
   };
 
+  users.users.minecraft = {
+    shell = pkgs.bashInteractive;
+  };
+
   systemd.services.minecraft-server-star = {
+    enable = true;
     description = "Minecraft Server: Star Tech";
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
+    path = [
+      pkgs.bashInteractive
+      pkgs.coreutils
+      pkgs.tmux
+    ];
 
     serviceConfig = {
       Type = "forking";
       GuessMainPID = true;
       User = "minecraft";
+      Group = "minecraft";
       WorkingDirectory = "/srv/minecraft/StarT-Theta-2-Hotfix-1/";
 
       RuntimeDirectory = "minecraft";
       RuntimeDirectoryPreserve = true;
+      RuntimeDirectoryMode = "0770";
 
-      ExecStart = "${pkgs.tmux}/bin/tmux -S /run/minecraft/star.sock new-session -d -s mc '${pkgs.jdk17_headless}/bin/java @user_jvm_args.txt @libraries/net/minecraftforge/forge/1.20.1-47.4.20/unix_args.txt --nogui'";
-      ExecStartPost = "${pkgs.coreutils}/bin/chmod 660 /run/minecraft/star.sock";
+      Environment = [
+        "SHELL=${pkgs.bashInteractive}/bin/bash"
+      ];
+
+      ExecStart = pkgs.writeShellScript "start-star" ''
+        sock=/run/minecraft/star.sock
+        rm -f "$sock"
+        export SHELL="${pkgs.bashInteractive}/bin/bash"
+        ${pkgs.tmux}/bin/tmux -S "$sock" set-option -g default-shell "${pkgs.bashInteractive}/bin/bash" \; new-session -d -s mc \
+          '${pkgs.jdk17_headless}/bin/java @user_jvm_args.txt @libraries/net/minecraftforge/forge/1.20.1-47.4.20/unix_args.txt --nogui'
+        ${pkgs.tmux}/bin/tmux -S "$sock" server-access -agw minecraft 2>/dev/null || true
+        ${pkgs.tmux}/bin/tmux -S "$sock" server-access -aw admin 2>/dev/null || true
+        ${pkgs.coreutils}/bin/chmod 660 "$sock" || true
+      '';
 
       ExecStop = pkgs.writeShellScript "stop-star" ''
-        sock=/run/minecraft/star-tech.sock
-        server_running() { ${pkgs.tmux}/bin/tmux -S "$sock" has-session; }
+        sock=/run/minecraft/star.sock
+        server_running() { ${pkgs.tmux}/bin/tmux -S "$sock" has-session 2>/dev/null; }
         if ! server_running; then exit 0; fi
         ${pkgs.tmux}/bin/tmux -S "$sock" send-keys -t mc C-u "stop" Enter
         while server_running; do sleep 1; done
       '';
 
+      TimeoutStopSec = "120s";
       Restart = "on-failure";
       RestartSec = "10s";
       NoNewPrivileges = true;
@@ -136,30 +161,51 @@ in
   };
 
   systemd.services.minecraft-server-hacker = {
+    enable = true;
     description = "Minecraft Server: Hacker man";
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
+    path = [
+      pkgs.bashInteractive
+      pkgs.coreutils
+      pkgs.tmux
+    ];
 
     serviceConfig = {
       Type = "forking";
       GuessMainPID = true;
       User = "minecraft";
+      Group = "minecraft";
       WorkingDirectory = "/srv/minecraft/hacker-hytten/";
 
       RuntimeDirectory = "minecraft";
       RuntimeDirectoryPreserve = true;
+      RuntimeDirectoryMode = "0770";
 
-      ExecStart = "${pkgs.tmux}/bin/tmux -S /run/minecraft/hacker.sock new-session -d -s mc '${pkgs.temurin-bin-17}/bin/java -Xmx10G @libraries/net/minecraftforge/forge/1.20.1-47.4.0/unix_args.txt'";
-      ExecStartPost = "${pkgs.coreutils}/bin/chmod 660 /run/minecraft/hacker.sock";
+      Environment = [
+        "SHELL=${pkgs.bashInteractive}/bin/bash"
+      ];
+
+      ExecStart = pkgs.writeShellScript "start-hacker" ''
+        sock=/run/minecraft/hacker.sock
+        rm -f "$sock"
+        export SHELL="${pkgs.bashInteractive}/bin/bash"
+        ${pkgs.tmux}/bin/tmux -S "$sock" set-option -g default-shell "${pkgs.bashInteractive}/bin/bash" \; new-session -d -s mc \
+          '${pkgs.temurin-bin-17}/bin/java -Xmx10G @libraries/net/minecraftforge/forge/1.20.1-47.4.0/unix_args.txt'
+        ${pkgs.tmux}/bin/tmux -S "$sock" server-access -agw minecraft 2>/dev/null || true
+        ${pkgs.tmux}/bin/tmux -S "$sock" server-access -aw admin 2>/dev/null || true
+        ${pkgs.coreutils}/bin/chmod 660 "$sock" || true
+      '';
 
       ExecStop = pkgs.writeShellScript "stop-hacker" ''
-        sock=/run/minecraft/hacker-hytten.sock
-        server_running() { ${pkgs.tmux}/bin/tmux -S "$sock" has-session; }
+        sock=/run/minecraft/hacker.sock
+        server_running() { ${pkgs.tmux}/bin/tmux -S "$sock" has-session 2>/dev/null; }
         if ! server_running; then exit 0; fi
         ${pkgs.tmux}/bin/tmux -S "$sock" send-keys -t mc C-u "stop" Enter
         while server_running; do sleep 1; done
       '';
 
+      TimeoutStopSec = "120s";
       Restart = "on-failure";
       RestartSec = "10s";
       NoNewPrivileges = true;
@@ -167,7 +213,60 @@ in
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    mcrcon
+  environment.systemPackages = [
+    pkgs.mcrcon
+    (pkgs.writeShellApplication {
+      name = "mc-attach";
+      runtimeInputs = with pkgs; [
+        tmux
+        coreutils
+        gnused
+      ];
+      text = ''
+        if [ $# -eq 0 ]; then
+          echo "Usage: mc-attach <server-name>"
+          echo ""
+          echo "Available servers:"
+          for sock in /run/minecraft/*.sock; do
+            [ -e "$sock" ] || continue
+            name=$(${pkgs.coreutils}/bin/basename "$sock" .sock)
+            echo "  $name -> tmux -S $sock attach"
+          done
+          exit 1
+        fi
+
+        name=$1
+        sock="/run/minecraft/$name.sock"
+
+        if [ ! -S "$sock" ]; then
+          echo "error: socket $sock not found" >&2
+          exit 1
+        fi
+
+        exec tmux -S "$sock" attach
+      '';
+    })
+    (pkgs.writeShellApplication {
+      name = "mc-console";
+      runtimeInputs = [ pkgs.tmux ];
+      text = ''
+        if [ $# -eq 0 ]; then
+          echo "Usage: mc-console <server-name> [command]"
+          echo "  Sends a command to the server console without attaching."
+          exit 1
+        fi
+
+        name=$1
+        shift
+        sock="/run/minecraft/$name.sock"
+
+        if [ ! -S "$sock" ]; then
+          echo "error: socket $sock not found" >&2
+          exit 1
+        fi
+
+        tmux -S "$sock" send-keys -t mc "$*" Enter
+      '';
+    })
   ];
 }
