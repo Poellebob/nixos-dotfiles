@@ -161,6 +161,14 @@ in
   };
   environment.sessionVariables.LIBVA_DRIVER_NAME = "nvidia";
 
+  programs.obs-studio = {
+    package = (
+      pkgs.obs-studio.override {
+        cudaSupport = true;
+      }
+    );
+  };
+
   specialisation.vr.configuration = {
     home-manager.users.viggokh = { config, pkgs, ... }: {
       xdg.configFile."openxr/1/active_runtime.json" = {

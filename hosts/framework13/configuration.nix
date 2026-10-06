@@ -107,6 +107,12 @@
     };
   };
 
+  programs.obs-studio = {
+    plugins = with pkgs.obs-studio-plugins; [
+      obs-vaapi
+    ];
+  };
+
   services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.bluetooth.enable = true;
   hardware.graphics = {

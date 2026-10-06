@@ -53,7 +53,6 @@
       prismlauncher
       spotify
       vesktop
-      obs-studio
     ];
   };
 
