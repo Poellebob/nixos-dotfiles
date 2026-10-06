@@ -121,6 +121,8 @@
     geteduroam
   ];
 
+  services.power-profiles-daemon.enable = true;
+
   console.keyMap = "dk-latin1";
 
   services.xserver.layout = "dk";
