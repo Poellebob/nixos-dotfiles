@@ -142,13 +142,6 @@
               ];
               rule.class = [ "Spotify" ];
             };
-            obs = {
-              keybind = [
-                "Main"
-                "o"
-              ];
-              rule.app_id = [ "obs-studio" ];
-            };
           };
 
           vim = {
