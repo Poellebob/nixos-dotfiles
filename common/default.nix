@@ -203,6 +203,7 @@
     godotPackages_4_6.godot
     devenv
     gnumake
+    just
     git
     ripgrep
     lazygit
