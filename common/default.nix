@@ -102,14 +102,7 @@
       enable = true;
       layout = "hy3";
     };
-    keybinds = [
-      {
-        exec = "${pkgs.kitty}/bin/kitty";
-        bind = [
-          "Main"
-          "Return"
-        ];
-      }
+    keybinds.custom = [
       {
         exec = "${pkgs.zen-browser}/bin/zen-beta";
         bind = [
