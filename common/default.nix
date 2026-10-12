@@ -249,6 +249,7 @@
     # Documents & Office
     libreoffice-fresh
     zathura
+    onedrive
 
     # Media
     mpv

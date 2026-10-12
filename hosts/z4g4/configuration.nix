@@ -36,8 +36,20 @@
   users.groups.libvirtd.members = [ "viggokh" ];
 
   boot = {
-    initrd.luks.devices."luks-c7afffcb-6f2f-4bd7-bdda-83283edd7d59".device =
-      "/dev/disk/by-uuid/c7afffcb-6f2f-4bd7-bdda-83283edd7d59";
+    initrd = {
+      verbose = false;
+
+      systemd = {
+        enable = true;
+        tpm2.enable = true;
+      };
+
+      luks.devices."luks-c7afffcb-6f2f-4bd7-bdda-83283edd7d59" = {
+        device = "/dev/disk/by-uuid/c7afffcb-6f2f-4bd7-bdda-83283edd7d59";
+        crypttabExtraOpts = [ "tpm2-device=auto" ];
+      };
+    };
+
     loader = {
       grub = {
         enable = true;
@@ -49,11 +61,6 @@
     };
 
     consoleLogLevel = 3;
-
-    initrd = {
-      verbose = false;
-      systemd.enable = true;
-    };
 
     kernelPackages = pkgs.linuxPackages;
 
