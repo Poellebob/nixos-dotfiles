@@ -139,6 +139,16 @@ in
     ];
   };
 
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = false;
+    setupScript = ''
+      ${pkgs.xrandr}/bin/xrandr --output DP-1 --mode 1920x1080 --primary --output HDMI-A-1 --mode 1920x1080 --left-of DP-1
+    '';
+    package = pkgs.kdePackages.sddm;
+    theme = "catppuccin-mocha-mauve";
+  };
+
   hardware.bluetooth.enable = true;
 
   console.keyMap = "dk-latin1";
@@ -154,11 +164,17 @@ in
   };
 
   programs.steam = {
+    enable = true;
+    extest.enable = true;
+    extraPackages = with pkgs; [
+      hidapi
+    ];
     extraCompatPackages = with pkgs; [
       nvidia-vaapi-driver
     ];
     remotePlay.openFirewall = true;
   };
+  hardware.steam-hardware.enable = true;
   environment.sessionVariables.LIBVA_DRIVER_NAME = "nvidia";
 
   programs.obs-studio = {
@@ -234,6 +250,10 @@ in
 
   environment.systemPackages = with pkgs; [
     vrrun
+    (pkgs.catppuccin-sddm.override {
+      flavor = "mocha"; # latte, frappe, macchiato or mocha
+      accent = "mauve";
+    })
     inputs.blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda
     wayvr
     shadps4

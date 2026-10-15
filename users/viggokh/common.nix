@@ -43,16 +43,13 @@
 
     packages = with pkgs; [
       thunderbird
+      neovide
       vscodium
       zed-editor
       obsidian
       ungoogled-chromium
       proton-vpn
-      tor-browser
       qbittorrent
-      prismlauncher
-      spotify
-      vesktop
     ];
   };
 
@@ -111,37 +108,7 @@
           wallpaper.engineEnabled = true;
           panel.alwaysVisible = true;
 
-          autostart = [
-            "${pkgs.spotify}/bin/spotify --disable-gpu"
-            "${pkgs.vesktop}/bin/vesktop --disable-gpu"
-            "${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnectd"
-          ];
-
-          specialWorkspaces = {
-            discord = {
-              keybind = [
-                "Main"
-                "m"
-              ];
-              rule = {
-                app_id = [
-                  "discord"
-                  "vesktop"
-                ];
-                class = [
-                  "discord"
-                  "vesktop"
-                ];
-              };
-            };
-            spotify = {
-              keybind = [
-                "Main"
-                "s"
-              ];
-              rule.class = [ "Spotify" ];
-            };
-          };
+          autostart = [ ];
 
           vim = {
             enable = true;

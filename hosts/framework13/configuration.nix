@@ -90,6 +90,16 @@
     }
   ];
 
+  hardware.steam-hardware.enable = true;
+
+  programs.steam = {
+    enable = true;
+    extest.enable = true;
+    extraPackages = with pkgs; [
+      hidapi
+    ];
+  };
+
   programs.virt-manager.enable = true;
 
   virtualisation = {
@@ -98,6 +108,7 @@
   };
 
   networking.hostName = "framework13";
+  services.displayManager.ly.enable = true;
 
   services.sunshine = {
     enable = true;

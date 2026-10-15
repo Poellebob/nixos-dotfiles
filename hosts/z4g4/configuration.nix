@@ -91,6 +91,8 @@
     }
   ];
 
+  services.displayManager.ly.enable = true;
+
   programs.virt-manager.enable = true;
 
   virtualisation = {
@@ -123,8 +125,6 @@
   console.keyMap = "dk-latin1";
 
   services.xserver.layout = "dk";
-
-  services.displayManager.ly.enable = true;
 
   environment.systemPackages = with pkgs; [
     swtpm

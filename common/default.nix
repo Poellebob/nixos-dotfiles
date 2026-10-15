@@ -60,7 +60,6 @@
   ];
 
   services.xserver.enable = true;
-  services.displayManager.ly.enable = true;
 
   security.polkit.enable = true;
   security.rtkit.enable = true;
@@ -169,11 +168,6 @@
     dbus.enable = true;
   };
 
-  programs.steam = {
-    enable = true;
-    package = pkgs.steam;
-  };
-
   programs.obs-studio = {
     enable = true;
 
@@ -188,7 +182,6 @@
     ];
   };
 
-  hardware.steam-hardware.enable = true;
   programs.kdeconnect.enable = true;
 
   environment.systemPackages = with pkgs; [

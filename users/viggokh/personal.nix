@@ -44,7 +44,10 @@
 
   users.users.viggokh.packages = with pkgs; [
     cemu
-    neovide
+    tor-browser
+    prismlauncher
+    vesktop
+    spotify
   ];
 
   home-manager.users.viggokh =
@@ -105,9 +108,40 @@
       };
 
       minima = {
-        autostart = [
-          "${pkgs.steam}/bin/steam -silent"
-        ];
+        autostart =
+          lib.optional nixosConfig.programs.steam.enable
+            "${nixosConfig.programs.steam.package}/bin/steam -silent"
+          ++ [
+            "${pkgs.spotify}/bin/spotify --disable-gpu"
+            "${pkgs.vesktop}/bin/vesktop --disable-gpu"
+            "${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnectd"
+          ];
+
+        specialWorkspaces = {
+          discord = {
+            keybind = [
+              "Main"
+              "m"
+            ];
+            rule = {
+              app_id = [
+                "discord"
+                "vesktop"
+              ];
+              class = [
+                "discord"
+                "vesktop"
+              ];
+            };
+          };
+          spotify = {
+            keybind = [
+              "Main"
+              "s"
+            ];
+            rule.class = [ "Spotify" ];
+          };
+        };
       };
     };
 }
