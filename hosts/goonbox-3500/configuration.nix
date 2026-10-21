@@ -7,7 +7,10 @@
 }:
 
 let
-  wivrnpkg = (pkgs.wivrn.override { cudaSupport = true; });
+  wivrnpkg = pkgs.wivrn.override {
+    cudaSupport = true;
+  };
+
   vrrun = pkgs.writeShellScriptBin "vrrun" ''
     exec env \
       PRESSURE_VESSEL_FILESYSTEMS_RW="$XDG_RUNTIME_DIR/wivrn/comp_ipc" \
@@ -51,6 +54,7 @@ in
     displays = {
       DP-1 = {
         res = "1920x1080";
+        hz = 144;
         position = {
           x = 0;
           y = 0;
@@ -60,12 +64,12 @@ in
         primary = true;
       };
       HDMI-A-1 = {
-        res = "1920x1080";
+        res = "3840x2160";
         position = {
           x = -1920;
           y = 0;
         };
-        scale = 1.0;
+        scale = 2.0;
         workspace = 10;
       };
     };
@@ -102,6 +106,7 @@ in
       "zswap.compressor=lz4"
       "zswap.max_pool_percent=20"
       "zswap.shrinker_enabled=1"
+      "nvidia-drm.fbdev=1"
     ];
 
     plymouth = {
@@ -125,7 +130,7 @@ in
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
-    open = false;
+    open = true;
     modesetting.enable = true;
     nvidiaSettings = true;
   };
@@ -139,15 +144,7 @@ in
     ];
   };
 
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = false;
-    setupScript = ''
-      ${pkgs.xrandr}/bin/xrandr --output DP-1 --mode 1920x1080 --primary --output HDMI-A-1 --mode 1920x1080 --left-of DP-1
-    '';
-    package = pkgs.kdePackages.sddm;
-    theme = "catppuccin-mocha-mauve";
-  };
+  services.displayManager.ly.enable = true;
 
   hardware.bluetooth.enable = true;
 
@@ -169,13 +166,34 @@ in
     extraPackages = with pkgs; [
       hidapi
     ];
-    extraCompatPackages = with pkgs; [
-      nvidia-vaapi-driver
-    ];
     remotePlay.openFirewall = true;
+
+    gamescopeSession = {
+      enable = false;
+      args = [
+        "--backend"
+        "drm"
+        "--prefer-output"
+        "HDMI-A-1"
+        "--output-width"
+        "1920"
+        "--output-height"
+        "1080"
+        "-r"
+        "60"
+      ];
+      env = {
+        LIBVA_DRIVER_NAME = "nvidia";
+        NVD_BACKEND = "direct";
+      };
+    };
   };
   hardware.steam-hardware.enable = true;
   environment.sessionVariables.LIBVA_DRIVER_NAME = "nvidia";
+  programs.gamescope = {
+    enable = true;
+    capSysNice = false;
+  };
 
   programs.obs-studio = {
     package = (
@@ -250,10 +268,6 @@ in
 
   environment.systemPackages = with pkgs; [
     vrrun
-    (pkgs.catppuccin-sddm.override {
-      flavor = "mocha"; # latte, frappe, macchiato or mocha
-      accent = "mauve";
-    })
     inputs.blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda
     wayvr
     shadps4
