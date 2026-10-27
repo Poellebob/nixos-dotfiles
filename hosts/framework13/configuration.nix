@@ -138,6 +138,12 @@
     geteduroam
   ];
 
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
+  virtualisation.virtualbox.guest.enable = true;
+  virtualisation.virtualbox.guest.dragAndDrop = true;
+  users.extraGroups.vboxusers.members = [ "viggokh" ];
+
   services.power-profiles-daemon.enable = true;
 
   console.keyMap = "dk-latin1";
@@ -145,4 +151,7 @@
   services.xserver.layout = "dk";
 
   services.displayManager.ly.enable = true;
+
+  environment.systemPackages = with pkgs; [
+  ];
 }

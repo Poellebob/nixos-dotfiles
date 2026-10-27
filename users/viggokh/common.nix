@@ -108,32 +108,36 @@
           wallpaper.engineEnabled = true;
           panel.alwaysVisible = true;
 
-          autostart = [ ];
+          autostart = [
+            "${pkgs.spotify}/bin/spotify --disable-gpu"
+            "${pkgs.vesktop}/bin/vesktop --disable-gpu"
+            "${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnectd"
+          ];
 
-          vim = {
-            enable = true;
-
-            lsp.servers = {
-              bashls.enable = true;
-            };
-
-            autocmd = [
-              {
-                event = "FileType";
-                pattern = [
-                  "rust"
-                  "python"
+          specialWorkspaces = {
+            discord = {
+              keybind = [
+                "Main"
+                "m"
+              ];
+              rule = {
+                app_id = [
+                  "discord"
+                  "vesktop"
                 ];
-                command = "setlocal tabstop=4 shiftwidth=4 softtabstop=4";
-                desc = "4-space indent for rust and python";
-              }
-              {
-                event = "FileType";
-                pattern = "tex";
-                command = "setlocal spell spelllang=da,en";
-                desc = "Danish/English spell checking for LaTeX";
-              }
-            ];
+                class = [
+                  "discord"
+                  "vesktop"
+                ];
+              };
+            };
+            spotify = {
+              keybind = [
+                "Main"
+                "s"
+              ];
+              rule.class = [ "Spotify" ];
+            };
           };
         };
       };

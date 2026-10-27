@@ -240,7 +240,7 @@
     unrar
 
     # Documents & Office
-    libreoffice-fresh
+    onlyoffice-desktopeditors
     zathura
     onedrive
 
