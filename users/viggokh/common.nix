@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  lib,
   minima,
   inputs,
   ...
@@ -55,15 +54,14 @@
 
   home-manager = {
     useUserPackages = true;
+    useGlobalPkgs = true;
     extraSpecialArgs = {
       inherit minima inputs;
       nixosConfig = config;
     };
     users.viggokh =
       {
-        config,
         pkgs,
-        nixosConfig,
         ...
       }:
       {
@@ -87,10 +85,6 @@
           mouse = true;
         };
 
-        nixpkgs.config.allowUnfree = true;
-
-        xdg.mimeApps.defaultApplications = { };
-
         programs.opencode = {
           enable = true;
           agents = {
@@ -109,36 +103,8 @@
           panel.alwaysVisible = true;
 
           autostart = [
-            "${pkgs.spotify}/bin/spotify --disable-gpu"
-            "${pkgs.vesktop}/bin/vesktop --disable-gpu"
             "${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnectd"
           ];
-
-          specialWorkspaces = {
-            discord = {
-              keybind = [
-                "Main"
-                "m"
-              ];
-              rule = {
-                app_id = [
-                  "discord"
-                  "vesktop"
-                ];
-                class = [
-                  "discord"
-                  "vesktop"
-                ];
-              };
-            };
-            spotify = {
-              keybind = [
-                "Main"
-                "s"
-              ];
-              rule.class = [ "Spotify" ];
-            };
-          };
         };
       };
   };

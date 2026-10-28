@@ -150,8 +150,6 @@
 
   services.xserver.layout = "dk";
 
-  services.displayManager.ly.enable = true;
-
   environment.systemPackages = with pkgs; [
   ];
 }

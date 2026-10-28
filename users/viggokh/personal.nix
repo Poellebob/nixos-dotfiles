@@ -2,8 +2,6 @@
   config,
   pkgs,
   lib,
-  minima,
-  inputs,
   ...
 }:
 
@@ -19,6 +17,7 @@
     };
     cemu-keys = {
       file = ../../secrets/cemu-keys.age;
+      owner = "viggokh";
     };
   };
 
@@ -102,7 +101,6 @@
           ++ [
             "${pkgs.spotify}/bin/spotify --disable-gpu"
             "${pkgs.vesktop}/bin/vesktop --disable-gpu"
-            "${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnectd"
           ];
 
         specialWorkspaces = {
