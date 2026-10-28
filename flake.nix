@@ -11,6 +11,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     agenix = {
       url = "github:ryantm/agenix";
@@ -95,11 +96,23 @@
           playit.nixosModules.default
           home-manager.nixosModules.home-manager
           ./hosts/goonbox-3500/configuration.nix
-          { nixpkgs.overlays = [ devenvUnstableOverlay ]; }
           {
+            nixpkgs.overlays = [
+              devenvUnstableOverlay
+              inputs.nix-cachyos-kernel.overlays.pinned
+            ];
+
             nix.settings = {
-              substituters = [ "https://adithyagenie.cachix.org" ];
-              trusted-public-keys = [ "adithyagenie.cachix.org-1:h6BSMboeVfxyrULWuRQqAyweo4AJRATekb88xotfQwc=" ];
+              substituters = [
+                "https://cache.nixos.org"
+                "https://adithyagenie.cachix.org"
+                "https://cache.lantian.pub/lantian"
+              ];
+
+              trusted-public-keys = [
+                "adithyagenie.cachix.org-1:h6BSMboeVfxyrULWuRQqAyweo4AJRATekb88xotfQwc="
+                "lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ="
+              ];
             };
           }
         ];

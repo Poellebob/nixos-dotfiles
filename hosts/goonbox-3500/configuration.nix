@@ -93,7 +93,7 @@ in
       systemd.enable = true;
     };
 
-    kernelPackages = pkgs.linuxPackages;
+    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore;
 
     kernelParams = [
       "quiet"
