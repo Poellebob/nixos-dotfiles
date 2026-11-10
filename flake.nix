@@ -18,11 +18,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-minecraft = {
-      url = "github:Infinidoge/nix-minecraft";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # pterodactyl = {
     #   url = "git+https://codeberg.org/Poellebob/pterodactyl-flake.git";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -80,7 +75,6 @@
       agenix,
       minima,
       nixos-wsl,
-      nix-minecraft,
       ...
     }@inputs:
     let
@@ -139,20 +133,6 @@
           { nixpkgs.overlays = [ devenvUnstableOverlay ]; }
         ];
         specialArgs = { inherit minima inputs; };
-      };
-
-      nixosConfigurations.homeserver = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          agenix.nixosModules.default
-          playit.nixosModules.default
-          nix-minecraft.nixosModules.minecraft-servers
-          {
-            nixpkgs.overlays = [ nix-minecraft.overlays.default ];
-          }
-          ./hosts/homeserver/configuration.nix
-        ];
-        specialArgs = { inherit inputs; };
       };
 
       nixosConfigurations.wsl = nixpkgs.lib.nixosSystem {
