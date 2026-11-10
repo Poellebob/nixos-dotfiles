@@ -71,6 +71,23 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    wireplumber.extraConfig."50-jbl-headroom" = {
+      "monitor.alsa.rules" = [
+        {
+          matches = [
+            {
+              "node.name" =
+                "alsa_output.usb-JBL_JBL_Quantum_360_Wireless-00.analog-stereo";
+            }
+          ];
+          actions = {
+            "update-props" = {
+              "api.alsa.headroom" = 1024;
+            };
+          };
+        }
+      ];
+    };
   };
 
   services.jackett = {
@@ -145,6 +162,8 @@
       coreutils
       gcc
       gcc.cc.lib
+      stdenv.cc.cc.lib
+      libxkbcommon
       clang
       libclang
     ];
@@ -267,6 +286,7 @@
     wl-clipboard
     brightnessctl
     wineWow64Packages.full
+    bottles
 
     # Qt
     qt5.qtwayland

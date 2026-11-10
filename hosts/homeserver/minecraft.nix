@@ -4,10 +4,10 @@
   ...
 }:
 let
-  ServerSidedModHash = "a081467fdd8fc497b74faa39efcec39edf167c71";
+  ServerSidedModHash = "3d4453fd39e2992eed7e957947cc80f35f7507da";
   serversided = pkgs.fetchPackwizModpack {
     url = "https://raw.githubusercontent.com/SESG-HTX-LAN/server-modpack/${ServerSidedModHash}/pack.toml";
-    packHash = "sha256-yjMV6GZ2ZNP2j/v6am4bGpP0jQobGvjhyoRYpNvtuX4=";
+    packHash = "sha256-w9G7IvO8dq8OGmUSOB+eOKFTdJL8/RPcFgTnZJW1fr4=";
   };
 in
 {
@@ -34,6 +34,7 @@ in
         motd = "Velkommen til the Dreamhouse (for alle goblins og eller Barbi entusiaster)";
         max-players = 20;
         level-name = "world";
+        enforce-secure-profile = false;
       };
 
       package = pkgs.fabricServers.fabric-26_1_2.override {

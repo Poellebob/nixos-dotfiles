@@ -96,12 +96,10 @@
       };
 
       minima = {
-        autostart =
-          lib.optional nixosConfig.programs.steam.enable "${nixosConfig.programs.steam.package}/bin/steam -silent"
-          ++ [
-            "${pkgs.spotify}/bin/spotify --disable-gpu"
-            "${pkgs.vesktop}/bin/vesktop --disable-gpu"
-          ];
+        autostart = lib.optional nixosConfig.programs.steam.enable "steam -silent" ++ [
+          "${pkgs.spotify}/bin/spotify --disable-gpu"
+          "${pkgs.vesktop}/bin/vesktop --disable-gpu"
+        ];
 
         specialWorkspaces = {
           discord = {
