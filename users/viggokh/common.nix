@@ -69,6 +69,7 @@
         imports = [
           minima.homeModules.default
           inputs.zen-browser.homeModules.default
+          ./tmux.nix
         ];
 
         home.sessionVariables = {
@@ -78,12 +79,9 @@
           oc = "opencode";
         };
 
-        programs.tmux = {
-          enable = true;
-          shell = "${pkgs.zsh}/bin/zsh";
-          clock24 = true;
-          mouse = true;
-        };
+        nixpkgs.config.allowUnfree = true;
+
+        xdg.mimeApps.defaultApplications = { };
 
         programs.opencode = {
           enable = true;
